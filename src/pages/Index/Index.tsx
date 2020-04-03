@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import csv from 'csvtojson';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend
-} from 'recharts';
+import LineChart from "../../components/LineChart";
 
+// https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series
 const apiUrl =
   'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
 
 const Index = () => {
   const [data, setData] = useState<any>([]);
   const [graphData, setGraphData] = useState<any>([]);
+  const [maxInfected, setMaxInfected] = useState<number>(0);
 
   //  get data from api
   useEffect(() => {
@@ -32,6 +26,7 @@ const Index = () => {
     });
   }, []);
 
+  // prepare data for view
   useEffect(() => {
     if (data.length === 0) {
       return;
@@ -49,37 +44,26 @@ const Index = () => {
         date,
         infected: countryData[date]
       };
+    }).filter((item: any) => {
+      return item.infected > 20;
     }));
 
   }, [data]);
 
-  console.log();
+  useEffect(() => {
+    if (graphData.length === 0) {
+      return;
+    }
+    setMaxInfected(+graphData[Object.keys(graphData)[Object.keys(graphData).length - 1]].infected);
+  }, [graphData]);
+
+  if (maxInfected === 0) {
+    return <>loading..</>;
+  }
 
   return (
     <div>
-      <h1>Hello there!</h1>
-      <LineChart
-        width={800}
-        height={400}
-        data={graphData}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5
-        }}
-      >
-        <XAxis dataKey="name" />
-        <YAxis dataKey="infected" />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="infected"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-      </LineChart>
+      <LineChart graphData={graphData} maxInfected={maxInfected} />
     </div>
   );
 };
