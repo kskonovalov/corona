@@ -1,5 +1,8 @@
 <?php
 
+header('Content-Type: text/html; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL,"https://xn--80aesfpebagmfblc0a.xn--p1ai/");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
