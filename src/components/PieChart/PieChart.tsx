@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PieChart as PieChartGraph, Pie, Sector } from 'recharts';
+import { PieChart as PieChartGraph, Pie, Tooltip } from 'recharts';
 import axios from 'axios';
 import csv from 'csvtojson';
 
@@ -10,26 +10,34 @@ const MyComponent = () => {
   useEffect(() => {
     axios.get(apiUrl).then(res => {
       const { data: apiData } = res;
-      setData(apiData);
+      setData(apiData.map((item: any) => {
+        return {
+            ...item,
+            sick: +item.sick
+        };
+      }));
     });
   }, []);
 
   if(data.length === 0) {
       return <>Loading..</>;
   }
-  console.log(data);
+
   return (
-    <PieChartGraph width={600} height={400}>
+    <PieChartGraph width={600} height={500}>
       <Pie
         nameKey="title"
         dataKey="sick"
         data={data}
-        cx={200}
-        cy={200}
-        outerRadius={80}
+        cx={250}
+        cy={250}
+        outerRadius={150}
         fill="#8884d8"
-        label
+        label={({name, sick}) => {
+          return sick > 100 ? name : '';
+        }}
       />
+      <Tooltip />
     </PieChartGraph>
   );
 };

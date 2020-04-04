@@ -71,7 +71,7 @@ const LineChart: React.FC = () => {
   return (
     <LineChartGraph
       width={600}
-      height={400}
+      height={500}
       data={graphData}
       margin={{
         top: 5,
