@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import csv from 'csvtojson';
-import LineChart from "../../components/LineChart";
+import React from 'react';
 
-// todo view-source:https://xn--80aesfpebagmfblc0a.xn--p1ai/#
+import LineChart from '../../components/LineChart';
+import PieChart from '../../components/PieChart';
 
 const Index = () => {
   return (
     <div>
+      <h2>Total infected in Russia</h2>
       <LineChart />
+      <h2>Infected in Russia by areas on today</h2>
+      <PieChart />
     </div>
   );
 };
