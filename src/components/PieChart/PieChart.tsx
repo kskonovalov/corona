@@ -19,7 +19,7 @@ const MyComponent = () => {
   }
   console.log(data);
   return (
-    <PieChartGraph width={800} height={400}>
+    <PieChartGraph width={600} height={400}>
       <Pie
         nameKey="title"
         dataKey="sick"
