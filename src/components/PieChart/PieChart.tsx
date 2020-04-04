@@ -10,17 +10,19 @@ const MyComponent = () => {
   useEffect(() => {
     axios.get(apiUrl).then(res => {
       const { data: apiData } = res;
-      setData(apiData.map((item: any) => {
-        return {
+      setData(
+        apiData.map((item: any) => {
+          return {
             ...item,
             sick: +item.sick
-        };
-      }));
+          };
+        })
+      );
     });
   }, []);
 
-  if(data.length === 0) {
-      return <>Loading..</>;
+  if (data.length === 0) {
+    return <>Loading..</>;
   }
 
   return (
@@ -33,7 +35,7 @@ const MyComponent = () => {
         cy={250}
         outerRadius={150}
         fill="#8884d8"
-        label={({name, sick}) => {
+        label={({ name, sick }) => {
           return sick > 100 ? name : '';
         }}
       />
