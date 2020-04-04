@@ -16,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "recharts": "^1.8.5",
+    "styled-components": "^5.0.1",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -43,6 +44,7 @@
     "@types/axios": "^0.14.0",
     "@types/csvtojson": "^1.1.5",
     "@types/recharts": "^1.8.9",
+    "@types/styled-components": "^5.0.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-jest-enzyme": "^7.1.2",
