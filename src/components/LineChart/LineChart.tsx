@@ -11,11 +11,9 @@ import axios from 'axios';
 import csv from 'csvtojson';
 
 import Loader from '../Loader';
+import { totalInfectedApiUrl as apiUrl } from '../../config';
 
 const LineChart: React.FC = () => {
-  // https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series
-  const apiUrl =
-    'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
   const [data, setData] = useState<any>([]);
   const [graphData, setGraphData] = useState<any>([]);
   const [maxInfected, setMaxInfected] = useState<number>(0);
@@ -88,7 +86,11 @@ const LineChart: React.FC = () => {
       }}
     >
       <XAxis dataKey="date" />
-      <YAxis dataKey="infected" domain={[0, maxInfected]} interval="preserveStartEnd"  />
+      <YAxis
+        dataKey="infected"
+        domain={[0, maxInfected]}
+        interval="preserveStartEnd"
+      />
       <Tooltip />
       <Legend />
       <Line

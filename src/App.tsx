@@ -7,6 +7,7 @@ import PieChart from './components/PieChart';
 const StyledTitle = styled.h1`
   text-align: center;
 `;
+
 const StyledIndex = styled.section`
   display: flex;
   flex-wrap: wrap;

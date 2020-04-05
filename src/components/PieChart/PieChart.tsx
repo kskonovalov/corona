@@ -4,9 +4,9 @@ import axios from 'axios';
 
 import Loader from '../Loader';
 import { getRandomColor } from '../../helpers';
+import { infectedInRussiaAreasApiUrl as apiUrl } from "../../config";
 
 const MyComponent = () => {
-  const apiUrl = 'https://kskonovalov.me/samples/corona/api/';
   const [data, setData] = useState<any>([]);
   //  get data from api
   useEffect(() => {
