@@ -3,6 +3,17 @@
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
+$file = 'data.json';
+const TWO_HOURS_IN_SECONDS = 60 * 60 * 2;
+
+// first check if data is fresh
+if (file_exists($file)) {
+    if(time() - filemtime($file) <= TWO_HOURS_IN_SECONDS) {
+        echo file_get_contents($file);
+        die();
+    }
+}
+
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL,"https://xn--80aesfpebagmfblc0a.xn--p1ai/");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -12,8 +23,7 @@ curl_close ($ch);
 preg_match("#\<script\>var mapData = (.*?);</script>#smi", $server_output, $result);
 
 $mapData = $result[1];
-//$mapData = preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
-//    return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
-//}, $mapData);
+
+file_put_contents($file, $mapData);
 
 echo $mapData;
