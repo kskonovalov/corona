@@ -10,6 +10,8 @@ import {
 import axios from 'axios';
 import csv from 'csvtojson';
 
+import Loader from '../Loader';
+
 const LineChart: React.FC = () => {
   // https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series
   const apiUrl =
@@ -70,7 +72,7 @@ const LineChart: React.FC = () => {
   }, [graphData]);
 
   if (maxInfected === 0) {
-    return <>loading..</>;
+    return <Loader />;
   }
 
   return (

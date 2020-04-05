@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import LineChart from './components/LineChart';
 import PieChart from './components/PieChart';
 
+const StyledTitle = styled.h1`
+  text-align: center;
+`;
 const StyledIndex = styled.section`
   display: flex;
   flex-wrap: wrap;
@@ -16,7 +19,7 @@ const StyledIndex = styled.section`
 function App() {
   return (
     <div className="App">
-      <h1>Russia infected covid-19 count</h1>
+      <StyledTitle>Russia infected covid-19 count</StyledTitle>
       <StyledIndex>
         <div>
           <h2>Total infected in Russia</h2>

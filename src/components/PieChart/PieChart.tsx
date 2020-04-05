@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PieChart as PieChartGraph, Pie, Tooltip, Cell } from 'recharts';
 import axios from 'axios';
 
+import Loader from '../Loader';
 import { getRandomColor } from '../../helpers';
 
 const MyComponent = () => {
@@ -27,7 +28,7 @@ const MyComponent = () => {
   }, []);
 
   if (data.length === 0) {
-    return <>Loading..</>;
+    return <Loader />;
   }
 
   return (
