@@ -87,8 +87,8 @@ const LineChart: React.FC = () => {
         bottom: 5
       }}
     >
-      <XAxis dataKey="name" />
-      <YAxis dataKey="infected" domain={[0, maxInfected]} />
+      <XAxis dataKey="date" />
+      <YAxis dataKey="infected" domain={[0, maxInfected]} interval="preserveStartEnd"  />
       <Tooltip />
       <Legend />
       <Line

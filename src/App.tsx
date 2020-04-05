@@ -16,6 +16,7 @@ const StyledIndex = styled.section`
     min-width: 500px;
   }
 `;
+
 function App() {
   return (
     <div className="App">
