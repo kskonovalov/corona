@@ -6,7 +6,7 @@ import Loader from '../Loader';
 import { getRandomColor } from '../../helpers';
 import { infectedInRussiaAreasApiUrl as apiUrl } from "../../config";
 
-const MyComponent = () => {
+const PieChart = () => {
   const [data, setData] = useState<any>([]);
   //  get data from api
   useEffect(() => {
@@ -54,4 +54,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default PieChart;
