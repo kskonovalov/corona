@@ -23,7 +23,7 @@ const LineChart: React.FC<any> = ({ data }) => {
       return;
     }
     setMaxInfected(
-      +data[Object.keys(data)[Object.keys(data).length - 1]].infected
+        +Math.max.apply(Math, data.map(function(item: any) { return item.infected; }))
     );
   }, [data]);
 
