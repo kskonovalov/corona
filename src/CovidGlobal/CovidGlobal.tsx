@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import csv from 'csvtojson';
@@ -23,25 +23,42 @@ const CovidGLobal = () => {
   );
   const [countries, setCountries] = useState<string[]>(['Russia']);
   const [country, setCountry] = useState('Russia');
+  const [apiData, setApiData] = useState([]);
+  const [preparedData, setPreparedData] = useState<any>([]);
 
   // todo: get data from api
-  const apiUrl = CSSEGISandDataUrl(type);
-  axios.get(apiUrl).then(res => {
-    const { data: apiData } = res;
-    csv({
-      output: 'json'
-    })
-      .fromString(apiData)
-      .then((jsonData: any) => {
-          console.log(jsonData);
-          // setCountries(jsonData)
-        const filteredByCountry: ICSSEGISandData = filterCSSEGISandDataByCountry(
-          jsonData,
-          country
-        );
-        const prepared = prepareCSSEGISandData(filteredByCountry);
+  useEffect(() => {
+      const apiUrl = CSSEGISandDataUrl(type);
+      axios.get(apiUrl).then(res => {
+          const { data } = res;
+          csv({
+              output: 'json'
+          })
+              .fromString(data)
+              .then((jsonData: any) => {
+                  const apiCountries: string[] = [];
+                  jsonData.map((item: any) => {
+                      if(!apiCountries.includes(item['Country/Region'])) {
+                          apiCountries.push(item['Country/Region']);
+                      }
+                      setCountries(apiCountries);
+                  });
+                  setApiData(jsonData);
+              });
       });
-  });
+  }, [type]);
+
+  useEffect(() => {
+      if(apiData.length === 0) {
+          return;
+      }
+      const filteredByCountry: ICSSEGISandData = filterCSSEGISandDataByCountry(
+          apiData,
+          country
+      );
+      setPreparedData(prepareCSSEGISandData(filteredByCountry));
+  }, [apiData]);
+
 
   // todo: provide data to Graph
 
@@ -59,9 +76,19 @@ const CovidGLobal = () => {
           <option value="recovered">Recovered</option>
           <option value="deaths">Deaths</option>
         </StyledSelect>
-        in {country}
+        in
+          <StyledSelect
+              value={country}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                  setCountry(e.target.value);
+              }}
+          >
+              {countries.map((item) => {
+                  return <option value={item} key={item}>{item}</option>;
+              })}
+          </StyledSelect>
       </h3>
-      <p>CovidGlobal {apiUrl}</p>
+      <p>CovidGlobal</p>
     </div>
   );
 };
