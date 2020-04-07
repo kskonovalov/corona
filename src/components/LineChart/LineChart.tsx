@@ -14,23 +14,22 @@ interface IData {
   data: any;
 }
 
-const LineChart: React.FC<any> = ({ data }) => {
-  console.log(data);
-  const [maxInfected, setMaxInfected] = useState<number>(0);
+const LineChart: React.FC<any> = ({ data, countLabel }) => {
+  const [maxCount, setMaxCount] = useState<number>(0);
 
   useEffect(() => {
     if (data.length === 0) {
       return;
     }
-    setMaxInfected(
-        +Math.max.apply(Math, data.map(function(item: any) { return item.infected; }))
+    setMaxCount(
+        +Math.max.apply(Math, Object.keys(data).map(function(item: any) { return +data[item]; }))
     );
   }, [data]);
 
-  if (maxInfected === 0) {
+  if (maxCount === 0) {
     return <Loader />;
   }
-  console.log(data);
+
   return (
     <LineChartGraph
       width={600}
@@ -45,15 +44,15 @@ const LineChart: React.FC<any> = ({ data }) => {
     >
       <XAxis dataKey="date" />
       <YAxis
-        dataKey="infected"
-        domain={[0, maxInfected]}
+        dataKey="count"
+        domain={[0, maxCount]}
         interval="preserveStartEnd"
       />
       <Tooltip />
-      <Legend />
+      <Legend payload={[{value: `${countLabel} count`, type: 'line', id: 'ID01'}]}/>
       <Line
         type="monotone"
-        dataKey="infected"
+        dataKey="count"
         stroke="#8884d8"
         activeDot={{ r: 8 }}
         // label={({x, y}) => {

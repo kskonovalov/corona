@@ -85,7 +85,7 @@ const CovidGLobal = () => {
               })}
           </StyledSelect>
       </h3>
-      <LineChart data={preparedData} />
+      <LineChart data={preparedData} countLabel={type} />
     </div>
   );
 };

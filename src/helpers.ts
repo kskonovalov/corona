@@ -15,6 +15,17 @@ const getRandomColor = () => {
 export { getRandomColor };
 
 /**
+ *
+ * @param date
+ */
+const formatDate = (date: string | Date) => {
+  const dayDate = new Date(date);
+  const options = { weekday: 'short', month: 'long', day: 'numeric' };
+  return dayDate.toLocaleDateString('en-US', options);
+};
+
+
+/**
  * Function returns url to get data from api https://github.com/CSSEGISandData/COVID-19
  * see config.ts / baseCSSEGISandDataUrl
  *
@@ -53,27 +64,28 @@ export { filterCSSEGISandDataByCountry };
  * @param data
  */
 const prepareCSSEGISandData = (data: ICSSEGISandData) => {
-  // leave only 'day => infected' values in CSSEGISandData array
+  const preparedData = data; // do not mutate data
+  // leave only 'day => count' values in CSSEGISandData array
   const keysToDelete: string[] = [
     'Province/State',
     'Country/Region',
     'Lat',
-    'Long',
+    'Long'
   ];
   keysToDelete.forEach((item: string) => {
-    if (item in data) {
-      delete data[item];
+    if (item in preparedData) {
+      delete preparedData[item];
     }
   });
-
-  // change infected to number
-  return Object.keys(data)
-    .map((date: string): {date: string, infected: string | number} => {
-      return {
-        date,
-        infected: +data[date]
-      };
-    });
+  return Object.keys(preparedData).map((date: string): {
+    date: string;
+    count: string | number;
+  } => {
+    return {
+      date: formatDate(date),
+      count: +preparedData[date]
+    };
+  });
 };
 
 export { prepareCSSEGISandData };
