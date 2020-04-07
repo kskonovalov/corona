@@ -21,6 +21,7 @@ const CovidGLobal = () => {
   const [type, setType] = useState<baseCSSEGISandDataTypes | string>(
     'confirmed'
   );
+  const [countries, setCountries] = useState<string[]>(['Russia']);
   const [country, setCountry] = useState('Russia');
 
   // todo: get data from api
@@ -32,6 +33,8 @@ const CovidGLobal = () => {
     })
       .fromString(apiData)
       .then((jsonData: any) => {
+          console.log(jsonData);
+          // setCountries(jsonData)
         const filteredByCountry: ICSSEGISandData = filterCSSEGISandDataByCountry(
           jsonData,
           country

@@ -28,7 +28,7 @@ const CSSEGISandDataUrl = (type: baseCSSEGISandDataTypes | string): string => {
 export { CSSEGISandDataUrl };
 
 export interface ICSSEGISandData {
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 /**
