@@ -7,77 +7,35 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
-import axios from 'axios';
-import csv from 'csvtojson';
 
 import Loader from '../Loader';
 
-const LineChart: React.FC = () => {
-  const [data, setData] = useState<any>([]);
-  const [graphData, setGraphData] = useState<any>([]);
+interface IData {
+  data: any;
+}
+
+const LineChart: React.FC<any> = ({ data }) => {
+  console.log(data);
   const [maxInfected, setMaxInfected] = useState<number>(0);
 
-  //  get data from api
-  const apiUrl = '';
-  useEffect(() => {
-    axios.get(apiUrl).then(res => {
-      const { data: apiData } = res;
-      csv({
-        output: 'json'
-      })
-        .fromString(apiData)
-        .then((jsonData: any) => {
-          setData(jsonData);
-        });
-    });
-  }, []);
-
-  // prepare data for view
   useEffect(() => {
     if (data.length === 0) {
       return;
     }
-    const filteredData = data.filter((item: any) => {
-      return item['Country/Region'] === 'Russia';
-    });
-    const countryData = filteredData[0];
-    delete countryData['Province/State'];
-    delete countryData['Country/Region'];
-    delete countryData['Lat'];
-    delete countryData['Long'];
-    setGraphData(
-      Object.keys(countryData)
-        .map((date: string) => {
-          return {
-            date,
-            infected: countryData[date]
-          };
-        })
-        .filter((item: any) => {
-          return item.infected > 20;
-        })
+    setMaxInfected(
+      +data[Object.keys(data)[Object.keys(data).length - 1]].infected
     );
   }, [data]);
-
-  useEffect(() => {
-    if (graphData.length === 0) {
-      return;
-    }
-    setMaxInfected(
-      +graphData[Object.keys(graphData)[Object.keys(graphData).length - 1]]
-        .infected
-    );
-  }, [graphData]);
 
   if (maxInfected === 0) {
     return <Loader />;
   }
-
+  console.log(data);
   return (
     <LineChartGraph
       width={600}
       height={500}
-      data={graphData}
+      data={data}
       margin={{
         top: 5,
         right: 30,

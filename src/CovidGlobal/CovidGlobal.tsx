@@ -10,6 +10,7 @@ import {
   prepareCSSEGISandData
 } from '../helpers';
 import { baseCSSEGISandDataTypes } from '../config';
+import LineChart from "../components/LineChart";
 
 const StyledSelect = styled.select`
   display: inline-block;
@@ -26,7 +27,6 @@ const CovidGLobal = () => {
   const [apiData, setApiData] = useState([]);
   const [preparedData, setPreparedData] = useState<any>([]);
 
-  // todo: get data from api
   useEffect(() => {
       const apiUrl = CSSEGISandDataUrl(type);
       axios.get(apiUrl).then(res => {
@@ -59,9 +59,6 @@ const CovidGLobal = () => {
       setPreparedData(prepareCSSEGISandData(filteredByCountry));
   }, [apiData]);
 
-
-  // todo: provide data to Graph
-
   return (
     <div>
       <h3>
@@ -88,7 +85,7 @@ const CovidGLobal = () => {
               })}
           </StyledSelect>
       </h3>
-      <p>CovidGlobal</p>
+      <LineChart data={preparedData} />
     </div>
   );
 };
