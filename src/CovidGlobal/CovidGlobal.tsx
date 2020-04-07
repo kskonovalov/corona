@@ -57,7 +57,7 @@ const CovidGLobal = () => {
           country
       );
       setPreparedData(prepareCSSEGISandData(filteredByCountry));
-  }, [apiData]);
+  }, [apiData, country]);
 
   return (
     <div>
