@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import csv from "csvtojson";
+import axios from "axios";
 
-import LineChart from './components/LineChart';
+import CovidGlobal from './CovidGlobal';
 import PieChart from './components/PieChart';
+import { filterByRegion } from "./helpers";
 
 const StyledTitle = styled.h1`
   text-align: center;
@@ -21,11 +24,10 @@ const StyledIndex = styled.section`
 function App() {
   return (
     <div className="App">
-      <StyledTitle>Russia infected covid-19 count</StyledTitle>
+      <StyledTitle>Covid-19</StyledTitle>
       <StyledIndex>
         <div>
-          <h2>Total infected in Russia</h2>
-          <LineChart />
+          <CovidGlobal />
         </div>
         <div>
           <h2>Infected in Russia by areas on today</h2>

@@ -11,7 +11,6 @@ import axios from 'axios';
 import csv from 'csvtojson';
 
 import Loader from '../Loader';
-import { totalInfectedApiUrl as apiUrl } from '../../config';
 
 const LineChart: React.FC = () => {
   const [data, setData] = useState<any>([]);
@@ -19,6 +18,7 @@ const LineChart: React.FC = () => {
   const [maxInfected, setMaxInfected] = useState<number>(0);
 
   //  get data from api
+  const apiUrl = '';
   useEffect(() => {
     axios.get(apiUrl).then(res => {
       const { data: apiData } = res;
