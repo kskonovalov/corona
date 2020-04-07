@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import axios from 'axios';
 import csv from 'csvtojson';
 
-import { CSSEGISandDataUrl } from '../helpers';
+import {
+  CSSEGISandDataUrl,
+  filterCSSEGISandDataByCountry,
+  ICSSEGISandData,
+  prepareCSSEGISandData
+} from '../helpers';
 import { baseCSSEGISandDataTypes } from '../config';
 
 const StyledSelect = styled.select`
@@ -13,11 +18,27 @@ const StyledSelect = styled.select`
 
 const CovidGLobal = () => {
   // todo: graph view
-  const [type, setType] = useState<baseCSSEGISandDataTypes | string>('confirmed');
+  const [type, setType] = useState<baseCSSEGISandDataTypes | string>(
+    'confirmed'
+  );
   const [country, setCountry] = useState('Russia');
 
   // todo: get data from api
-    const apiUrl = CSSEGISandDataUrl(type);
+  const apiUrl = CSSEGISandDataUrl(type);
+  axios.get(apiUrl).then(res => {
+    const { data: apiData } = res;
+    csv({
+      output: 'json'
+    })
+      .fromString(apiData)
+      .then((jsonData: any) => {
+        const filteredByCountry: ICSSEGISandData = filterCSSEGISandDataByCountry(
+          jsonData,
+          country
+        );
+        const prepared = prepareCSSEGISandData(filteredByCountry);
+      });
+  });
 
   // todo: provide data to Graph
 

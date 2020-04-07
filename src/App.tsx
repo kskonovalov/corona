@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import csv from "csvtojson";
-import axios from "axios";
 
 import CovidGlobal from './CovidGlobal';
 import PieChart from './components/PieChart';
-import { filterByRegion } from "./helpers";
 
 const StyledTitle = styled.h1`
   text-align: center;
