@@ -5,7 +5,7 @@ import csv from 'csvtojson';
 
 import {
   CSSEGISandDataUrl,
-  filterCSSEGISandDataByCountry,
+  filterCSSEGISandData,
   ICSSEGISandData,
   prepareCSSEGISandData
 } from '../helpers';
@@ -54,9 +54,9 @@ const CovidGLobal = () => {
     const currentProvinces: string[] = [];
     apiData.map((item: any) => {
       if (item['Country/Region'] === country) {
-        currentProvinces.push(item['Province/State'].length > 0 ? item['Province/State'] : "All");
+        currentProvinces.push(item['Province/State']);
       }
-      if(currentProvinces.length > 1) {
+      if (currentProvinces.length > 1) {
         setProvinces(currentProvinces);
       } else {
         setProvinces([]);
@@ -68,13 +68,20 @@ const CovidGLobal = () => {
     if (apiData.length === 0) {
       return;
     }
-    const filteredByCountry: ICSSEGISandData = filterCSSEGISandDataByCountry(
+    const filteredByCountry: ICSSEGISandData = filterCSSEGISandData(
       apiData,
-      country
+      country,
+      province
     );
     setPreparedData(prepareCSSEGISandData(filteredByCountry));
-  }, [apiData, country]);
+  }, [apiData, country, province]);
 
+  const Graph =
+    preparedData.length > 0 ? (
+      <LineChart data={preparedData} countLabel={type} />
+    ) : (
+      <>no data</>
+    );
   return (
     <div>
       <h3>
@@ -101,7 +108,7 @@ const CovidGLobal = () => {
               {provinces.map(item => {
                 return (
                   <option value={item} key={item}>
-                    {item}
+                    {item.length > 0 ? item : 'All'}
                   </option>
                 );
               })}
@@ -124,7 +131,7 @@ const CovidGLobal = () => {
           })}
         </StyledSelect>
       </h3>
-      <LineChart data={preparedData} countLabel={type} />
+      {Graph}
     </div>
   );
 };

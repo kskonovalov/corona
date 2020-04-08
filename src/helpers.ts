@@ -46,18 +46,24 @@ export interface ICSSEGISandData {
  *
  * @param data
  * @param country
+ * @param province
  */
-const filterCSSEGISandDataByCountry = (
+const filterCSSEGISandData = (
   data: object[][],
-  country: string
+  country: string,
+  province: string
 ): ICSSEGISandData => {
   const filteredData: any = data.filter((item: any) => {
+    if(province.length > 0) {
+      return item['Country/Region'] === country && item['Province/State'] === province;
+    }
     return item['Country/Region'] === country;
   });
+  console.log(filteredData);
   return filteredData.length > 0 ? filteredData[0] : [];
 };
 
-export { filterCSSEGISandDataByCountry };
+export { filterCSSEGISandData };
 
 /**
  * Function to prepare CSSEGISandData data
