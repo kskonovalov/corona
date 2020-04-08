@@ -53,6 +53,9 @@ const filterCSSEGISandData = (
   country: string,
   province: string
 ): ICSSEGISandData => {
+  console.log(data);
+  console.log(country);
+  console.log(province);
   const filteredData: any = data.filter((item: any) => {
     return item['Country/Region'] === country && item['Province/State'] === province;
   });
@@ -67,7 +70,7 @@ export { filterCSSEGISandData };
  * @param data
  */
 const prepareCSSEGISandData = (data: ICSSEGISandData) => {
-  const preparedData = data; // do not mutate data
+  const preparedData = Object.assign({...data}); // do not mutate data
   // leave only 'day => count' values in CSSEGISandData array
   const keysToDelete: string[] = [
     'Province/State',
