@@ -24,8 +24,8 @@ const CovidGLobal = () => {
   );
   const [countries, setCountries] = useState<string[]>(['Russia']);
   const [country, setCountry] = useState<string>('Russia');
-  const [regions, setRegions] = useState<string[]>([]);
-  const [region, setRegion] = useState<string>('');
+  const [provinces, setProvinces] = useState<string[]>([]);
+  const [province, setProvince] = useState<string>('');
   const [apiData, setApiData] = useState([]);
   const [preparedData, setPreparedData] = useState<any>([]);
 
@@ -38,7 +38,6 @@ const CovidGLobal = () => {
       })
         .fromString(data)
         .then((jsonData: any) => {
-            console.log(jsonData);
           const apiCountries: string[] = [];
           jsonData.map((item: any) => {
             if (!apiCountries.includes(item['Country/Region'])) {
@@ -50,6 +49,20 @@ const CovidGLobal = () => {
         });
     });
   }, [type]);
+
+  useEffect(() => {
+    const currentProvinces: string[] = [];
+    apiData.map((item: any) => {
+      if (item['Country/Region'] === country) {
+        currentProvinces.push(item['Province/State'].length > 0 ? item['Province/State'] : "All");
+      }
+      if(currentProvinces.length > 1) {
+        setProvinces(currentProvinces);
+      } else {
+        setProvinces([]);
+      }
+    });
+  }, [apiData, country]);
 
   useEffect(() => {
     if (apiData.length === 0) {
@@ -76,16 +89,16 @@ const CovidGLobal = () => {
           <option value="recovered">Recovered</option>
           <option value="deaths">Deaths</option>
         </StyledSelect>
-        {regions.length > 0 && (
+        {provinces.length > 0 && (
           <>
             in{' '}
             <StyledSelect
-              value={region}
+              value={province}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                setRegion(e.target.value);
+                setProvince(e.target.value);
               }}
             >
-              {regions.map(item => {
+              {provinces.map(item => {
                 return (
                   <option value={item} key={item}>
                     {item}
