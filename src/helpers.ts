@@ -53,13 +53,9 @@ const filterCSSEGISandData = (
   country: string,
   province: string
 ): ICSSEGISandData => {
-  console.log(data);
-  console.log(country);
-  console.log(province);
   const filteredData: any = data.filter((item: any) => {
     return item['Country/Region'] === country && item['Province/State'] === province;
   });
-  console.log(filteredData);
   return filteredData.length > 0 ? filteredData[0] : [];
 };
 
