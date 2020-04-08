@@ -10,7 +10,7 @@ import {
   prepareCSSEGISandData
 } from '../helpers';
 import { baseCSSEGISandDataTypes } from '../config';
-import LineChart from "../components/LineChart";
+import LineChart from '../components/LineChart';
 
 const StyledSelect = styled.select`
   display: inline-block;
@@ -23,40 +23,43 @@ const CovidGLobal = () => {
     'confirmed'
   );
   const [countries, setCountries] = useState<string[]>(['Russia']);
-  const [country, setCountry] = useState('Russia');
+  const [country, setCountry] = useState<string>('Russia');
+  const [regions, setRegions] = useState<string[]>([]);
+  const [region, setRegion] = useState<string>('');
   const [apiData, setApiData] = useState([]);
   const [preparedData, setPreparedData] = useState<any>([]);
 
   useEffect(() => {
-      const apiUrl = CSSEGISandDataUrl(type);
-      axios.get(apiUrl).then(res => {
-          const { data } = res;
-          csv({
-              output: 'json'
-          })
-              .fromString(data)
-              .then((jsonData: any) => {
-                  const apiCountries: string[] = [];
-                  jsonData.map((item: any) => {
-                      if(!apiCountries.includes(item['Country/Region'])) {
-                          apiCountries.push(item['Country/Region']);
-                      }
-                      setCountries(apiCountries);
-                  });
-                  setApiData(jsonData);
-              });
-      });
+    const apiUrl = CSSEGISandDataUrl(type);
+    axios.get(apiUrl).then(res => {
+      const { data } = res;
+      csv({
+        output: 'json'
+      })
+        .fromString(data)
+        .then((jsonData: any) => {
+            console.log(jsonData);
+          const apiCountries: string[] = [];
+          jsonData.map((item: any) => {
+            if (!apiCountries.includes(item['Country/Region'])) {
+              apiCountries.push(item['Country/Region']);
+            }
+            setCountries(apiCountries);
+          });
+          setApiData(jsonData);
+        });
+    });
   }, [type]);
 
   useEffect(() => {
-      if(apiData.length === 0) {
-          return;
-      }
-      const filteredByCountry: ICSSEGISandData = filterCSSEGISandDataByCountry(
-          apiData,
-          country
-      );
-      setPreparedData(prepareCSSEGISandData(filteredByCountry));
+    if (apiData.length === 0) {
+      return;
+    }
+    const filteredByCountry: ICSSEGISandData = filterCSSEGISandDataByCountry(
+      apiData,
+      country
+    );
+    setPreparedData(prepareCSSEGISandData(filteredByCountry));
   }, [apiData, country]);
 
   return (
@@ -73,17 +76,40 @@ const CovidGLobal = () => {
           <option value="recovered">Recovered</option>
           <option value="deaths">Deaths</option>
         </StyledSelect>
-        in
-          <StyledSelect
-              value={country}
+        {regions.length > 0 && (
+          <>
+            in{' '}
+            <StyledSelect
+              value={region}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                  setCountry(e.target.value);
+                setRegion(e.target.value);
               }}
-          >
-              {countries.map((item) => {
-                  return <option value={item} key={item}>{item}</option>;
+            >
+              {regions.map(item => {
+                return (
+                  <option value={item} key={item}>
+                    {item}
+                  </option>
+                );
               })}
-          </StyledSelect>
+            </StyledSelect>
+          </>
+        )}
+        in
+        <StyledSelect
+          value={country}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+            setCountry(e.target.value);
+          }}
+        >
+          {countries.map(item => {
+            return (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            );
+          })}
+        </StyledSelect>
       </h3>
       <LineChart data={preparedData} countLabel={type} />
     </div>
