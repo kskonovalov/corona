@@ -14,7 +14,7 @@ interface IData {
   data: any;
 }
 
-const LineChart: React.FC<any> = ({ data, countLabel }) => {
+const LineChart: React.FC<any> = ({ data, countLabel, country, province }) => {
   const [maxCount, setMaxCount] = useState<number>(0);
 
   useEffect(() => {
@@ -38,18 +38,18 @@ const LineChart: React.FC<any> = ({ data, countLabel }) => {
       margin={{
         top: 5,
         right: 30,
-        left: 20,
-        bottom: 5
+        left: 25,
+        bottom: 70
       }}
     >
-      <XAxis dataKey="date" angle={-60} textAnchor="end" interval={3} />
+      <XAxis dataKey="date" angle={-45} textAnchor="end" interval={5} />
       <YAxis
         dataKey="count"
         domain={[0, maxCount]}
         interval="preserveStartEnd"
       />
       <Tooltip />
-      <Legend payload={[{value: `${countLabel} count`, type: 'line', id: 'ID01'}]}/>
+      <Legend  verticalAlign="top" payload={[{value: `${countLabel} count in ${province} ${country}`, type: 'line', id: 'ID01'}]}/>
       <Line
         type="monotone"
         dataKey="count"
