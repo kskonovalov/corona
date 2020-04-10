@@ -42,7 +42,7 @@ const LineChart: React.FC<any> = ({ data, countLabel }) => {
         bottom: 5
       }}
     >
-      <XAxis dataKey="date" />
+      <XAxis dataKey="date" angle={-60} textAnchor="end" interval={3} />
       <YAxis
         dataKey="count"
         domain={[0, maxCount]}
