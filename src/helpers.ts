@@ -24,7 +24,6 @@ const formatDate = (date: string | Date) => {
   return dayDate.toLocaleDateString('en-US', options);
 };
 
-
 /**
  * Function returns url to get data from api https://github.com/CSSEGISandData/COVID-19
  * see config.ts / baseCSSEGISandDataUrl
@@ -54,7 +53,9 @@ const filterCSSEGISandData = (
   province: string
 ): ICSSEGISandData => {
   const filteredData: any = data.filter((item: any) => {
-    return item['Country/Region'] === country && item['Province/State'] === province;
+    return (
+      item['Country/Region'] === country && item['Province/State'] === province
+    );
   });
   return filteredData.length > 0 ? filteredData[0] : [];
 };
@@ -66,7 +67,7 @@ export { filterCSSEGISandData };
  * @param data
  */
 const prepareCSSEGISandData = (data: ICSSEGISandData) => {
-  const preparedData = Object.assign({...data}); // do not mutate data
+  const preparedData = Object.assign({ ...data }); // do not mutate data
   // leave only 'day => count' values in CSSEGISandData array
   const keysToDelete: string[] = [
     'Province/State',

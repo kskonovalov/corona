@@ -22,7 +22,12 @@ const LineChart: React.FC<any> = ({ data, countLabel, country, province }) => {
       return;
     }
     setMaxCount(
-        +Math.max.apply(Math, Object.keys(data).map(function(item: any) { return +data[item]; }))
+      +Math.max.apply(
+        Math,
+        Object.keys(data).map(function(item: any) {
+          return +data[item];
+        })
+      )
     );
   }, [data]);
 
@@ -49,7 +54,16 @@ const LineChart: React.FC<any> = ({ data, countLabel, country, province }) => {
         interval="preserveStartEnd"
       />
       <Tooltip />
-      <Legend  verticalAlign="top" payload={[{value: `${countLabel} count in ${province} ${country}`, type: 'line', id: 'ID01'}]}/>
+      <Legend
+        verticalAlign="top"
+        payload={[
+          {
+            value: `${countLabel} count in ${province} ${country}`,
+            type: 'line',
+            id: 'ID01'
+          }
+        ]}
+      />
       <Line
         type="monotone"
         dataKey="count"

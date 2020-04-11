@@ -78,7 +78,12 @@ const CovidGLobal = () => {
 
   const Graph =
     preparedData.length > 0 ? (
-      <LineChart data={preparedData} countLabel={type} country={country} province={province} />
+      <LineChart
+        data={preparedData}
+        countLabel={type}
+        country={country}
+        province={province}
+      />
     ) : (
       <>no data</>
     );
