@@ -14,7 +14,7 @@ interface IData {
   data: any;
 }
 
-const LineChart: React.FC<any> = ({ data, countLabel, country, province }) => {
+const LineChart: React.FC<any> = ({ data }) => {
   const [maxCount, setMaxCount] = useState<number>(0);
 
   useEffect(() => {
@@ -54,16 +54,6 @@ const LineChart: React.FC<any> = ({ data, countLabel, country, province }) => {
         interval="preserveStartEnd"
       />
       <Tooltip />
-      <Legend
-        verticalAlign="top"
-        payload={[
-          {
-            value: `${countLabel} count in ${province} ${country}`,
-            type: 'line',
-            id: 'ID01'
-          }
-        ]}
-      />
       <Line
         type="monotone"
         dataKey="count"

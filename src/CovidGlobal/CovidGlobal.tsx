@@ -76,17 +76,6 @@ const CovidGLobal = () => {
     setPreparedData(prepareCSSEGISandData(filteredByCountry));
   }, [apiData, country, province]);
 
-  const Graph =
-    preparedData.length > 0 ? (
-      <LineChart
-        data={preparedData}
-        countLabel={type}
-        country={country}
-        province={province}
-      />
-    ) : (
-      <>no data</>
-    );
   return (
     <div>
       <h3>
@@ -136,7 +125,14 @@ const CovidGLobal = () => {
           })}
         </StyledSelect>
       </h3>
-      {Graph}
+      {preparedData.length > 0 ? (
+        <h2>
+          {type} count in {province} {country}
+        </h2>
+      ) : (
+        <h2>no data</h2>
+      )}
+      {preparedData.length > 0 && <LineChart data={preparedData} />}
     </div>
   );
 };
