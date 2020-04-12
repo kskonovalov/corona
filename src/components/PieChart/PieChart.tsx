@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { PieChart as PieChartGraph, Pie, Tooltip, Cell } from 'recharts';
+import {
+  PieChart as PieChartGraph,
+  Pie,
+  Tooltip,
+  Cell,
+  ResponsiveContainer
+} from 'recharts';
 import axios from 'axios';
 
 import Loader from '../Loader';
 import { getRandomColor } from '../../helpers';
-import { infectedInRussiaAreasApiUrl as apiUrl } from "../../config";
+import { infectedInRussiaAreasApiUrl as apiUrl } from '../../config';
 
 const PieChart = () => {
   const [data, setData] = useState<any>([]);
@@ -32,25 +38,27 @@ const PieChart = () => {
   }
 
   return (
-    <PieChartGraph width={600} height={500}>
-      <Pie
-        nameKey="title"
-        dataKey="sick"
-        data={data}
-        cx={240}
-        cy={250}
-        outerRadius={130}
-        fill="#8884d8"
-        label={({ name, sick }) => {
-          return `${name} (${sick})`;
-        }}
-      >
-        {data.map((item: any, i: number) => (
-          <Cell key={`cell-${i}`} fill={getRandomColor()} />
-        ))}
-      </Pie>
-      <Tooltip />
-    </PieChartGraph>
+    <ResponsiveContainer width="100%" height={500}>
+      <PieChartGraph>
+        <Pie
+          nameKey="title"
+          dataKey="sick"
+          data={data}
+          cx={240}
+          cy={250}
+          outerRadius={130}
+          fill="#8884d8"
+          label={({ name, sick }) => {
+            return `${name} (${sick})`;
+          }}
+        >
+          {data.map((item: any, i: number) => (
+            <Cell key={`cell-${i}`} fill={getRandomColor()} />
+          ))}
+        </Pie>
+        <Tooltip />
+      </PieChartGraph>
+    </ResponsiveContainer>
   );
 };
 

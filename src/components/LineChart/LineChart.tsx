@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Legend,
+  ResponsiveContainer,
   Line,
   LineChart as LineChartGraph,
   Tooltip,
@@ -36,34 +36,34 @@ const LineChart: React.FC<any> = ({ data }) => {
   }
 
   return (
-    <LineChartGraph
-      width={600}
-      height={500}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 25,
-        bottom: 70
-      }}
-    >
-      <XAxis dataKey="date" angle={-45} textAnchor="end" interval={5} />
-      <YAxis
-        dataKey="count"
-        domain={[0, maxCount]}
-        interval="preserveStartEnd"
-      />
-      <Tooltip />
-      <Line
-        type="monotone"
-        dataKey="count"
-        stroke="#8884d8"
-        activeDot={{ r: 8 }}
-        // label={({x, y}) => {
-        //     return `date: ${x}, infected: ${y}`;
-        // }}
-      />
-    </LineChartGraph>
+    <ResponsiveContainer width="100%" height={500}>
+      <LineChartGraph
+        data={data}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 25,
+          bottom: 70
+        }}
+      >
+        <XAxis dataKey="date" angle={-45} textAnchor="end" interval={5} />
+        <YAxis
+          dataKey="count"
+          domain={[0, maxCount]}
+          interval="preserveStartEnd"
+        />
+        <Tooltip />
+        <Line
+          type="monotone"
+          dataKey="count"
+          stroke="#8884d8"
+          activeDot={{ r: 8 }}
+          // label={({x, y}) => {
+          //     return `date: ${x}, infected: ${y}`;
+          // }}
+        />
+      </LineChartGraph>
+    </ResponsiveContainer>
   );
 };
 
