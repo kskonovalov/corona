@@ -8,9 +8,9 @@ import {
   filterCSSEGISandData,
   ICSSEGISandData,
   prepareCSSEGISandData
-} from '../helpers';
-import { baseCSSEGISandDataTypes } from '../config';
-import LineChart from '../components/LineChart';
+} from '../../helpers';
+import { baseCSSEGISandDataTypes } from '../../config';
+import LineChart from '../../components/LineChart';
 
 const StyledSelect = styled.select`
   display: inline-block;

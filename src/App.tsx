@@ -1,37 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-import CovidGlobal from './CovidGlobal';
-import PieChart from './components/PieChart';
-
-const StyledTitle = styled.h1`
-  text-align: center;
-`;
+import Header from './components/Header/Header';
+import CovidGLobal from './Pages/CovidGlobal/CovidGlobal';
+import CovidRussianAreas from './Pages/CovidRussianAreas/CovidRussianAreas';
 
 const StyledIndex = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  & > div {
-    width: 45%;
-    min-width: 500px;
-  }
+  width: 1000px;
+  max-width: 100%;
+  margin: 0 auto;
 `;
 
 function App() {
   return (
-    <div className="App">
-      <StyledTitle>Covid-19</StyledTitle>
-      <StyledIndex>
-        <div>
-          <CovidGlobal />
-        </div>
-        <div>
-          <h2>Infected in Russia by areas on today</h2>
-          <PieChart />
-        </div>
-      </StyledIndex>
-    </div>
+    <StyledIndex>
+      <BrowserRouter>
+        <Header />
+        <Route path="/" exact component={CovidGLobal} />
+        <Route path="/russia" component={CovidRussianAreas} />
+      </BrowserRouter>
+    </StyledIndex>
   );
 }
 
