@@ -36,7 +36,7 @@ const LineChart: React.FC<any> = ({ data }) => {
   }
 
   return (
-    <ResponsiveContainer width="100%" aspect={2.0/1.0}>
+    <ResponsiveContainer width="100%" aspect={2.0}>
       <LineChartGraph
         data={data}
         margin={{
