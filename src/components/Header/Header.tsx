@@ -22,9 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       color: '#fff',
       borderColor: '#fff',
-      '&:hover': {
-        borderColor: 'rgba(255, 255, 255, 0.5)'
-      }
+      '&:hover, &.active': {
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+        background: '#fff',
+        color: deepOrange[300],
+      },
     },
     buttonGroup: {
       marginLeft: '20px'
@@ -44,7 +46,7 @@ const Header = () => {
             aria-label="outlined primary button group"
             className={classes.buttonGroup}
           >
-            <Button component={NavLink} to="/" className={classes.button}>
+            <Button component={NavLink} to="/" exact className={classes.button}>
               World
             </Button>
             <Button component={NavLink} to="/russia" className={classes.button}>
