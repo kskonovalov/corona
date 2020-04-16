@@ -1,25 +1,58 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import {
+  Button,
+  ButtonGroup,
+  Typography,
+  AppBar,
+  Toolbar
+} from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { deepOrange } from '@material-ui/core/colors';
 
-const StyledLink = styled(NavLink)`
-  text-decoration: none;
-`;
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    topBar: {
+      background: deepOrange[300]
+    },
+    title: {
+      flexGrow: 1
+    },
+    button: {
+      color: '#fff',
+      borderColor: '#fff',
+      '&:hover': {
+        borderColor: 'rgba(255, 255, 255, 0.5)'
+      }
+    },
+    buttonGroup: {
+      marginLeft: '20px'
+    }
+  })
+);
 
 const Header = () => {
+  const classes = useStyles();
   return (
     <>
-      <h1>Covid 2020 visual</h1>
-      <ButtonGroup color="primary" aria-label="outlined primary button group">
-        <Button>
-          <StyledLink to="/">World</StyledLink>
-        </Button>
-        <Button>
-          <StyledLink to="/russia">Russia</StyledLink>
-        </Button>
-      </ButtonGroup>
+      <AppBar position="static" className={classes.topBar}>
+        <Toolbar>
+          <Typography variant="h6">Covid 2020 visual</Typography>
+          <ButtonGroup
+            color="primary"
+            aria-label="outlined primary button group"
+            className={classes.buttonGroup}
+          >
+            <Button component={NavLink} to="/" className={classes.button}>
+              World
+            </Button>
+            <Button component={NavLink} to="/russia" className={classes.button}>
+              Russia
+            </Button>
+          </ButtonGroup>
+        </Toolbar>
+      </AppBar>
     </>
   );
 };
