@@ -2,6 +2,16 @@ import React, { ChangeEvent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import csv from 'csvtojson';
+import {
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Typography,
+  Box
+} from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { deepOrange } from '@material-ui/core/colors';
 
 import {
   CSSEGISandDataUrl,
@@ -12,12 +22,21 @@ import {
 import { baseCSSEGISandDataTypes } from '../../config';
 import LineChart from '../../components/LineChart';
 
-const StyledSelect = styled.select`
-  display: inline-block;
-  margin: 0 10px;
-`;
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    select: {
+      padding: '7px 5px',
+    },
+    selectWrap: {
+      margin: '0 10px',
+      position: 'relative',
+      top: '3px'
+    }
+  })
+);
 
 const CovidGLobal = () => {
+  const classes = useStyles();
   // todo: graph view
   const [type, setType] = useState<baseCSSEGISandDataTypes | string>(
     'confirmed'
@@ -77,54 +96,78 @@ const CovidGLobal = () => {
   }, [apiData, country, province]);
 
   return (
-    <div>
-      <h3>
+    <Box component="section" mt={3}>
+      <Typography variant="h4" component="h2">
         Total
-        <StyledSelect
-          value={type}
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-            setType(e.target.value);
-          }}
-        >
-          <option value="confirmed">Confirmed</option>
-          <option value="recovered">Recovered</option>
-          <option value="deaths">Deaths</option>
-        </StyledSelect>
+        <FormControl variant="outlined">
+          <InputLabel id="demo-simple-select-label">type</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            value={type}
+            onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+              setType(event.target.value as string);
+            }}
+            classes={{
+              root: classes.select
+            }}
+            className={classes.selectWrap}
+          >
+            <MenuItem value="confirmed">Confirmed</MenuItem>
+            <MenuItem value="recovered">Recovered</MenuItem>
+            <MenuItem value="deaths">Deaths</MenuItem>
+          </Select>
+        </FormControl>
         {provinces.length > 0 && (
           <>
             in{' '}
-            <StyledSelect
-              value={province}
-              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                setProvince(e.target.value);
-              }}
-            >
-              {provinces.map(item => {
-                return (
-                  <option value={item} key={item}>
-                    {item.length > 0 ? item : 'All'}
-                  </option>
-                );
-              })}
-            </StyledSelect>
+            <FormControl variant="outlined">
+              <InputLabel id="demo-simple-select-label">type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                value={province}
+                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                  setProvince(event.target.value as string);
+                }}
+                classes={{
+                  root: classes.select
+                }}
+                className={classes.selectWrap}
+              >
+                {provinces.map(item => {
+                  return (
+                    <MenuItem value={item} key={item}>
+                      {item.length > 0 ? item : 'All'}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
           </>
         )}
         in
-        <StyledSelect
-          value={country}
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-            setCountry(e.target.value);
-          }}
-        >
-          {countries.map(item => {
-            return (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            );
-          })}
-        </StyledSelect>
-      </h3>
+        <FormControl variant="outlined">
+          <InputLabel id="demo-simple-select-label">type</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            value={country}
+            onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+              setCountry(event.target.value as string);
+            }}
+            classes={{
+              root: classes.select
+            }}
+            className={classes.selectWrap}
+          >
+            {countries.map(item => {
+              return (
+                <MenuItem value={item} key={item}>
+                  {item}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </Typography>
       {preparedData.length > 0 ? (
         <h2>
           {type} count in {province} {country}
@@ -132,8 +175,8 @@ const CovidGLobal = () => {
       ) : (
         <h2>no data</h2>
       )}
-      {preparedData.length > 0 && <LineChart data={preparedData} />}
-    </div>
+      {preparedData.length > 0 &&  <LineChart data={preparedData} />}
+    </Box>
   );
 };
 
