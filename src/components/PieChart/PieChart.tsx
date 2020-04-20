@@ -18,10 +18,11 @@ const PieChart = () => {
   useEffect(() => {
     axios.get(apiUrl).then(res => {
       const { data: apiData } = res;
+      console.log(data);
       setData(
         apiData
           .filter((item: any) => {
-            return item.sick > 50;
+            return item.sick > 300;
           })
           .map((item: any) => {
             return {
