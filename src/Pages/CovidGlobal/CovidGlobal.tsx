@@ -25,7 +25,10 @@ import LineChart from '../../components/LineChart';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     select: {
-      padding: '7px 5px',
+      padding: '7px 5px'
+    },
+    outlined: {
+      borderColor: deepOrange[300]
     },
     selectWrap: {
       margin: '0 10px',
@@ -108,7 +111,8 @@ const CovidGLobal = () => {
               setType(event.target.value as string);
             }}
             classes={{
-              root: classes.select
+              root: classes.select,
+              outlined: classes.outlined
             }}
             className={classes.selectWrap}
           >
@@ -121,7 +125,7 @@ const CovidGLobal = () => {
           <>
             in{' '}
             <FormControl variant="outlined">
-              <InputLabel id="demo-simple-select-label">type</InputLabel>
+              <InputLabel id="demo-simple-select-label">Province</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 value={province}
@@ -146,7 +150,7 @@ const CovidGLobal = () => {
         )}
         in
         <FormControl variant="outlined">
-          <InputLabel id="demo-simple-select-label">type</InputLabel>
+          <InputLabel id="demo-simple-select-label">Country</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             value={country}
@@ -175,7 +179,7 @@ const CovidGLobal = () => {
       ) : (
         <h2>no data</h2>
       )}
-      {preparedData.length > 0 &&  <LineChart data={preparedData} />}
+      {preparedData.length > 0 && <LineChart data={preparedData} />}
     </Box>
   );
 };
