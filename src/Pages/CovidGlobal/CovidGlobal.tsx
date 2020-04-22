@@ -58,8 +58,6 @@ const CovidGLobal = () => {
   const [preparedData, setPreparedData] = useState<any>([]);
   const [displayForDays, setDisplayForDays] = useState<number>(30);
 
-  const [dynamicData, setDynamicData] = useState<any>([]);
-
   // get data from api
   useEffect(() => {
     const apiUrl = CSSEGISandDataUrl(type);
@@ -107,8 +105,9 @@ const CovidGLobal = () => {
       country,
       province
     );
-    setPreparedData(prepareCSSEGISandData(filteredByCountry));
-  }, [apiData, country, province]);
+    const dataArray = prepareCSSEGISandData(filteredByCountry);
+    setPreparedData(dataArray.slice(Math.max(dataArray.length - displayForDays, 0)));
+  }, [apiData, country, province, displayForDays]);
 
   return (
     <Box component="section" mt={3}>
@@ -189,7 +188,7 @@ const CovidGLobal = () => {
             label="days"
             value={displayForDays}
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              setDisplayForDays(parseInt(event.currentTarget.value));
+              setDisplayForDays(parseInt(event.currentTarget.value) || 0);
             }}
             classes={{
               root: classes.select
