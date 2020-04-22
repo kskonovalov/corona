@@ -80,7 +80,7 @@ const prepareCSSEGISandData = (data: ICSSEGISandData) => {
       delete preparedData[item];
     }
   });
-  return Object.keys(preparedData).map((date: string): {
+  const formattedPreparedData = Object.keys(preparedData).map((date: string): {
     date: string;
     count: string | number;
   } => {
@@ -89,6 +89,9 @@ const prepareCSSEGISandData = (data: ICSSEGISandData) => {
       count: +preparedData[date]
     };
   });
+  // last 30 days
+  const limitedPreparedData = formattedPreparedData.slice(Math.max(formattedPreparedData.length - 30, 0));
+  return limitedPreparedData;
 };
 
 export { prepareCSSEGISandData };

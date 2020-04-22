@@ -4,6 +4,7 @@ import axios from 'axios';
 import csv from 'csvtojson';
 import {
   Select,
+  TextField,
   FormControl,
   InputLabel,
   MenuItem,
@@ -34,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: '0 10px',
       position: 'relative',
       top: '3px'
+    },
+    inputWrap: {
+      margin: '0 10px',
+      position: 'relative',
+      top: '3px'
     }
   })
 );
@@ -50,7 +56,11 @@ const CovidGLobal = () => {
   const [province, setProvince] = useState<string>('');
   const [apiData, setApiData] = useState([]);
   const [preparedData, setPreparedData] = useState<any>([]);
+  const [displayForDays, setDisplayForDays] = useState<number>(30);
 
+  const [dynamicData, setDynamicData] = useState<any>([]);
+
+  // get data from api
   useEffect(() => {
     const apiUrl = CSSEGISandDataUrl(type);
     axios.get(apiUrl).then(res => {
@@ -72,6 +82,7 @@ const CovidGLobal = () => {
     });
   }, [type]);
 
+  // fill provinces for selected country
   useEffect(() => {
     const currentProvinces: string[] = [];
     apiData.map((item: any) => {
@@ -86,6 +97,7 @@ const CovidGLobal = () => {
     });
   }, [apiData, country]);
 
+  // prepare data to the format for graphics
   useEffect(() => {
     if (apiData.length === 0) {
       return;
@@ -171,6 +183,21 @@ const CovidGLobal = () => {
             })}
           </Select>
         </FormControl>
+        for last
+        <FormControl variant="outlined">
+          <TextField
+            label="days"
+            value={displayForDays}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setDisplayForDays(parseInt(event.currentTarget.value));
+            }}
+            classes={{
+              root: classes.select
+            }}
+            className={classes.inputWrap}
+          />
+        </FormControl>
+        days
       </Typography>
       {preparedData.length > 0 ? (
         <h2>
