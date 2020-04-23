@@ -25,7 +25,7 @@ import LineChart from '../../components/LineChart';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    select: {
+    padded: {
       padding: '7px 5px'
     },
     outlined: {
@@ -39,7 +39,15 @@ const useStyles = makeStyles((theme: Theme) =>
     inputWrap: {
       margin: '0 10px',
       position: 'relative',
-      top: '3px'
+      width: '50px',
+      "& .MuiInput-underline:after": {
+        borderColor: deepOrange[300]
+      }
+    },
+    input: {
+      fontSize: '2.125rem',
+      textAlign: 'center',
+      marginTop: '-11px',
     }
   })
 );
@@ -122,7 +130,7 @@ const CovidGLobal = () => {
               setType(event.target.value as string);
             }}
             classes={{
-              root: classes.select,
+              root: classes.padded,
               outlined: classes.outlined
             }}
             className={classes.selectWrap}
@@ -144,7 +152,7 @@ const CovidGLobal = () => {
                   setProvince(event.target.value as string);
                 }}
                 classes={{
-                  root: classes.select
+                  root: classes.padded
                 }}
                 className={classes.selectWrap}
               >
@@ -169,7 +177,7 @@ const CovidGLobal = () => {
               setCountry(event.target.value as string);
             }}
             classes={{
-              root: classes.select
+              root: classes.padded
             }}
             className={classes.selectWrap}
           >
@@ -185,13 +193,17 @@ const CovidGLobal = () => {
         for last
         <FormControl variant="outlined">
           <TextField
-            label="days"
             value={displayForDays}
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               setDisplayForDays(parseInt(event.currentTarget.value) || 0);
             }}
             classes={{
-              root: classes.select
+              root: classes.padded
+            }}
+            InputProps={{
+              classes: {
+                input: classes.input
+              },
             }}
             className={classes.inputWrap}
           />
