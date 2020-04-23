@@ -9,8 +9,11 @@ const TWO_HOURS_IN_SECONDS = 60 * 60 * 2;
 // first check if data is fresh
 if (file_exists($file)) {
     if(time() - filemtime($file) <= TWO_HOURS_IN_SECONDS) {
-        echo file_get_contents($file);
-        die();
+        $result = file_get_contents($file);
+        if(!empty($result)) {
+            echo $result;
+            die();
+        }
     }
 }
 
@@ -19,7 +22,7 @@ curl_setopt($ch, CURLOPT_URL,"https://xn--80aesfpebagmfblc0a.xn--p1ai/");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $server_output = curl_exec($ch);
 curl_close ($ch);
-preg_match("#var mapData = (.*?);</script>#smi", $server_output, $result);
+preg_match("#\:map-data=\'(.*?)'>#smi", $server_output, $result);
 $mapData = $result[1];
 if(!empty($mapData)) {
     file_put_contents($file, $mapData);
