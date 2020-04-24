@@ -48,7 +48,7 @@ export interface ICSSEGISandData {
  * @param province
  */
 const filterCSSEGISandData = (
-  data: object[][],
+  data: object[],
   country: string,
   province: string
 ): ICSSEGISandData => {

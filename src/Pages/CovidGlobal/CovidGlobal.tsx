@@ -62,7 +62,7 @@ const CovidGLobal = () => {
   const [country, setCountry] = useState<string>('Russia');
   const [provinces, setProvinces] = useState<string[]>([]);
   const [province, setProvince] = useState<string>('');
-  const [apiData, setApiData] = useState([]);
+  const [apiData, setApiData] = useState<ICSSEGISandData[]>([]);
   const [preparedData, setPreparedData] = useState<TPreparedData[]>([]);
   const [displayForDays, setDisplayForDays] = useState<number>(30);
 
@@ -75,11 +75,11 @@ const CovidGLobal = () => {
         output: 'json'
       })
         .fromString(data)
-        .then((jsonData: any) => {
+        .then((jsonData: ICSSEGISandData[]) => {
           const apiCountries: string[] = [];
-          jsonData.map((item: any) => {
-            if (!apiCountries.includes(item['Country/Region'])) {
-              apiCountries.push(item['Country/Region']);
+          jsonData.map((item: ICSSEGISandData) => {
+            if (!apiCountries.includes(item['Country/Region'] as string)) {
+              apiCountries.push(item['Country/Region'] as string);
             }
             setCountries(apiCountries);
             return item;
@@ -92,9 +92,9 @@ const CovidGLobal = () => {
   // fill provinces for selected country
   useEffect(() => {
     const currentProvinces: string[] = [];
-    apiData.map((item: any) => {
+    apiData.map((item: ICSSEGISandData) => {
       if (item['Country/Region'] === country) {
-        currentProvinces.push(item['Province/State']);
+        currentProvinces.push(item['Province/State'] as string);
       }
       if (currentProvinces.length > 1) {
         setProvinces(currentProvinces);
@@ -122,7 +122,7 @@ const CovidGLobal = () => {
   if(preparedData.length === 0) {
     return <Loader />;
   }
-  
+
   return (
     <Box component="section" mt={3}>
       <Typography variant="h4" component="h2">
