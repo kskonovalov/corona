@@ -66,6 +66,11 @@ export { filterCSSEGISandData };
  * Function to prepare CSSEGISandData data
  * @param data
  */
+export type TPreparedData = {
+  date: string;
+  count: string | number;
+};
+
 const prepareCSSEGISandData = (data: ICSSEGISandData) => {
   const preparedData = Object.assign({ ...data }); // do not mutate data
   // leave only 'day => count' values in CSSEGISandData array
@@ -80,10 +85,7 @@ const prepareCSSEGISandData = (data: ICSSEGISandData) => {
       delete preparedData[item];
     }
   });
-  const formattedPreparedData = Object.keys(preparedData).map((date: string): {
-    date: string;
-    count: string | number;
-  } => {
+  const formattedPreparedData = Object.keys(preparedData).map((date: string): TPreparedData => {
     return {
       date: formatDate(date),
       count: +preparedData[date]

@@ -18,6 +18,7 @@ import {
   CSSEGISandDataUrl,
   filterCSSEGISandData,
   ICSSEGISandData,
+  TPreparedData,
   prepareCSSEGISandData
 } from '../../helpers';
 import { baseCSSEGISandDataTypes } from '../../config';
@@ -54,7 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const CovidGLobal = () => {
   const classes = useStyles();
-  // todo: graph view
   const [type, setType] = useState<baseCSSEGISandDataTypes | string>(
     'confirmed'
   );
@@ -63,7 +63,7 @@ const CovidGLobal = () => {
   const [provinces, setProvinces] = useState<string[]>([]);
   const [province, setProvince] = useState<string>('');
   const [apiData, setApiData] = useState([]);
-  const [preparedData, setPreparedData] = useState<any>([]);
+  const [preparedData, setPreparedData] = useState<TPreparedData[]>([]);
   const [displayForDays, setDisplayForDays] = useState<number>(30);
 
   // get data from api
