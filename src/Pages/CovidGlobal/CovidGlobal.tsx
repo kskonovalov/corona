@@ -22,6 +22,7 @@ import {
 } from '../../helpers';
 import { baseCSSEGISandDataTypes } from '../../config';
 import LineChart from '../../components/LineChart';
+import Loader from "../../components/Loader";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -81,6 +82,7 @@ const CovidGLobal = () => {
               apiCountries.push(item['Country/Region']);
             }
             setCountries(apiCountries);
+            return item;
           });
           setApiData(jsonData);
         });
@@ -99,6 +101,7 @@ const CovidGLobal = () => {
       } else {
         setProvinces([]);
       }
+      return item;
     });
   }, [apiData, country]);
 
@@ -116,6 +119,10 @@ const CovidGLobal = () => {
     setPreparedData(dataArray.slice(Math.max(dataArray.length - displayForDays, 0)));
   }, [apiData, country, province, displayForDays]);
 
+  if(preparedData.length === 0) {
+    return <Loader />;
+  }
+  
   return (
     <Box component="section" mt={3}>
       <Typography variant="h4" component="h2">
