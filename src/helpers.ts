@@ -37,7 +37,7 @@ const CSSEGISandDataUrl = (type: baseCSSEGISandDataTypes | string): string => {
 
 export { CSSEGISandDataUrl };
 
-export interface ICSSEGISandData {
+export type TCSSEGISandData = {
   [key: string]: string | number;
 }
 
@@ -51,7 +51,7 @@ const filterCSSEGISandData = (
   data: object[],
   country: string,
   province: string
-): ICSSEGISandData => {
+): TCSSEGISandData => {
   const filteredData: any = data.filter((item: any) => {
     return (
       item['Country/Region'] === country && item['Province/State'] === province
@@ -71,7 +71,7 @@ export type TPreparedData = {
   count: string | number;
 };
 
-const prepareCSSEGISandData = (data: ICSSEGISandData) => {
+const prepareCSSEGISandData = (data: TCSSEGISandData) => {
   const preparedData = Object.assign({ ...data }); // do not mutate data
   // leave only 'day => count' values in CSSEGISandData array
   const keysToDelete: string[] = [
