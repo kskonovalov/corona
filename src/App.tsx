@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 
-import Header from './components/Header/Header';
-import CovidGLobal from './Pages/CovidGlobal/CovidGlobal';
-import CovidRussianAreas from './Pages/CovidRussianAreas/CovidRussianAreas';
+import Header from './components/Header';
+import CovidGLobal from './pages/CovidGlobal';
+import CovidRussianAreas from './pages/CovidRussianAreas';
 
 function App() {
   return (

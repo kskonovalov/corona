@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PieChart from '../../components/PieChart';
+import PieChart from '../components/PieChart';
 
 const CovidRussianAreas = () => {
     return (

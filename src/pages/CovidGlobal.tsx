@@ -19,10 +19,10 @@ import {
   ICSSEGISandData,
   TPreparedData,
   prepareCSSEGISandData
-} from '../../helpers';
-import { baseCSSEGISandDataTypes } from '../../config';
-import LineChart from '../../components/LineChart';
-import Loader from "../../components/Loader";
+} from '../helpers';
+import { baseCSSEGISandDataTypes } from '../config';
+import LineChart from '../components/LineChart';
+import Loader from "../components/Loader";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
