@@ -42,9 +42,9 @@ const CovidGLobal = () => {
             if (!apiCountries.includes(item['Country/Region'] as string)) {
               apiCountries.push(item['Country/Region'] as string);
             }
-            setCountries(apiCountries);
             return item;
           });
+          setCountries(apiCountries);
           setApiData(jsonData);
         });
     });
