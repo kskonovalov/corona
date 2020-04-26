@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SetStateAction, Dispatch } from 'react';
+import React, { ChangeEvent } from 'react';
 import {
   FormControl,
   InputLabel,
@@ -42,15 +42,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type TFilters = {
   type: baseCSSEGISandDataTypes | string;
-  setType: Dispatch<SetStateAction<baseCSSEGISandDataTypes | string>>;
+  setType: (value: baseCSSEGISandDataTypes | string) => void;
   provinces: string[];
   province: string;
-  setProvince: Dispatch<SetStateAction<string>>;
+  setProvince: (value: string) => void;
   country: string;
-  setCountry: Dispatch<SetStateAction<string>>;
+  setCountry: (value: string) => void;
   countries: string[];
   displayForDays: number;
-  setDisplayForDays: Dispatch<SetStateAction<number>>;
+  setDisplayForDays: (value: number) => void;
 };
 
 const Filters: React.FC<TFilters> = ({
