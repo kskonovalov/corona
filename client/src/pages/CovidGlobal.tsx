@@ -29,6 +29,15 @@ const CovidGLobal = () => {
 
   // get data from api
   useEffect(() => {
+    const apiUrl = 'http://localhost:5000/api/countries';
+    axios.get(apiUrl).then(res => {
+      const { data } = res;
+      data.data && setCountries(data.data);
+    });
+  }, []);
+
+  // get data from api
+  useEffect(() => {
     const apiUrl = CSSEGISandDataUrl(type);
     axios.get(apiUrl).then(res => {
       const { data } = res;
@@ -38,13 +47,6 @@ const CovidGLobal = () => {
         .fromString(data)
         .then((jsonData: TCSSEGISandData[]) => {
           const apiCountries: string[] = [];
-          jsonData.map((item: TCSSEGISandData) => {
-            if (!apiCountries.includes(item['Country/Region'] as string)) {
-              apiCountries.push(item['Country/Region'] as string);
-            }
-            return item;
-          });
-          setCountries(apiCountries);
           setApiData(jsonData);
         });
     });
