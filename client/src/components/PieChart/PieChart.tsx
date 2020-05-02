@@ -18,19 +18,20 @@ const PieChart = () => {
   useEffect(() => {
     axios.get(apiUrl).then(res => {
       const { data: apiData } = res;
-      console.log(data);
-      setData(
-        apiData
-          .filter((item: any) => {
-            return item.sick > 500;
-          })
-          .map((item: any) => {
-            return {
-              ...item,
-              sick: +item.sick
-            };
-          })
-      );
+      if(apiData.length > 0) {
+        setData(
+            apiData
+                .filter((item: any) => {
+                  return item.sick > 500;
+                })
+                .map((item: any) => {
+                  return {
+                    ...item,
+                    sick: +item.sick
+                  };
+                })
+        );
+      }
     });
   }, []);
 
