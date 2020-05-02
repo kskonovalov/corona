@@ -27,62 +27,50 @@ const CovidGLobal = () => {
   const [preparedData, setPreparedData] = useState<TPreparedData[]>([]);
   const [displayForDays, setDisplayForDays] = useState<number>(30);
 
-  // get data from api
+  // get countries from api
   useEffect(() => {
     const apiUrl = 'http://localhost:5000/api/countries';
-    axios.get(apiUrl).then(res => {
+    axios.post(apiUrl, {
+      type
+    }).then(res => {
       const { data } = res;
       data.data && setCountries(data.data);
-    });
-  }, []);
-
-  // get data from api
-  useEffect(() => {
-    const apiUrl = CSSEGISandDataUrl(type);
-    axios.get(apiUrl).then(res => {
-      const { data } = res;
-      csv({
-        output: 'json'
-      })
-        .fromString(data)
-        .then((jsonData: TCSSEGISandData[]) => {
-          const apiCountries: string[] = [];
-          setApiData(jsonData);
-        });
     });
   }, [type]);
 
   // fill provinces for selected country
   useEffect(() => {
-    const currentProvinces: string[] = [];
-    apiData.map((item: TCSSEGISandData) => {
-      if (item['Country/Region'] === country) {
-        currentProvinces.push(item['Province/State'] as string);
-      }
-      if (currentProvinces.length > 1) {
-        setProvinces(currentProvinces);
+    const apiUrl = 'http://localhost:5000/api/provinces';
+    axios.post(apiUrl, {
+      type,
+      country
+    }).then(res => {
+      const { data } = res;
+      if(data.data) {
+        setProvinces(data.data);
       } else {
         setProvinces([]);
       }
-      return item;
     });
-  }, [apiData, country]);
+  }, [type, country]);
 
   // prepare data to the format for graphics
   useEffect(() => {
-    if (apiData.length === 0) {
-      return;
-    }
-    const filteredByCountry: TCSSEGISandData = filterCSSEGISandData(
-      apiData,
+    const apiUrl = 'http://localhost:5000/api/graphdata';
+    axios.post(apiUrl, {
+      type,
       country,
-      province
-    );
-    const dataArray = prepareCSSEGISandData(filteredByCountry);
-    setPreparedData(
-      dataArray.slice(Math.max(dataArray.length - displayForDays, 0))
-    );
-  }, [apiData, country, province, displayForDays]);
+      province,
+      displayForDays
+    }).then(res => {
+      const { data } = res;
+      if(data.data) {
+        setPreparedData(data.data);
+      } else {
+        setPreparedData([]);
+      }
+    });
+  }, [country, province, displayForDays]);
 
   if (preparedData.length === 0) {
     return <Loader />;
