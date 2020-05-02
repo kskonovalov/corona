@@ -22,7 +22,7 @@ const PieChart = () => {
         setData(
             apiData
                 .filter((item: any) => {
-                  return item.sick > 500;
+                  return item.sick > 1000;
                 })
                 .map((item: any) => {
                   return {
