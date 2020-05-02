@@ -88,4 +88,38 @@ router.post('/graphdata', async (req, res) => {
   }
 });
 
+
+// /api/russia-areas
+router.post('/russia-areas', async (req, res) => {
+  const { minCount } = req.body;
+
+  // const TWO_HOURS_IN_SECONDS = 60 * 60 * 2;
+  // $file = 'data.json';
+// first check if data is fresh
+//   if (file_exists($file)) {
+//     if(time() - filemtime($file) <= TWO_HOURS_IN_SECONDS) {
+//       $result = file_get_contents($file);
+//       if(!empty($result)) {
+//         echo $result;
+//         die();
+//       }
+//     }
+//   }
+
+  const apiUrl = 'https://xn--80aesfpebagmfblc0a.xn--p1ai/information/';
+
+  try {
+    const result = await axios.get(apiUrl);
+    const data = result.data.match(/\:spread\-data\=\'(.*?)\'/is);
+
+      // file_put_contents($file, $mapData);
+
+    return res.json({ data: data[1] });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ error: 'Something get wrong! Please try again' });
+  }
+});
+
 module.exports = router;

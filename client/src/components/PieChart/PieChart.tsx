@@ -10,17 +10,22 @@ import axios from 'axios';
 
 import Loader from '../Loader';
 import { getRandomColor } from '../../helpers';
-import { infectedInRussiaAreasApiUrl as apiUrl } from '../../config';
+// import { infectedInRussiaAreasApiUrl as apiUrl } from '../../config';
 
 const PieChart = () => {
   const [data, setData] = useState<any>([]);
   //  get data from api
+
+  const apiUrl = 'http://localhost:5000/api/russia-areas';
+
   useEffect(() => {
-    axios.get(apiUrl).then(res => {
-      const { data: apiData } = res;
+    axios.post(apiUrl, {
+      minCount: 1000
+    }).then(res => {
+      const { data: apiData } = res.data;
       if(apiData.length > 0) {
         setData(
-            apiData
+            JSON.parse(apiData)
                 .filter((item: any) => {
                   return item.sick > 1000;
                 })
