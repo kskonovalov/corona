@@ -70,7 +70,7 @@ const CovidGLobal = () => {
         setPreparedData([]);
       }
     });
-  }, [country, province, displayForDays]);
+  }, [type, country, province, displayForDays]);
 
   if (preparedData.length === 0) {
     return <Loader />;
