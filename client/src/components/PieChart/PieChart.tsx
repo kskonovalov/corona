@@ -6,31 +6,11 @@ import {
   Cell,
   ResponsiveContainer
 } from 'recharts';
-import axios from 'axios';
 
 import Loader from '../Loader';
 import { getRandomColor } from '../../helpers';
-// import { infectedInRussiaAreasApiUrl as apiUrl } from '../../config';
 
-const PieChart = () => {
-  const [data, setData] = useState<any>([]);
-  //  get data from api
-
-  const apiUrl = 'http://localhost:5000/api/russia-areas';
-
-  useEffect(() => {
-    axios.post(apiUrl, {
-      minCount: 1000
-    }).then(res => {
-      const { data: apiData } = res.data;
-      if(apiData.length > 0) {
-        setData(
-            apiData
-        );
-      }
-    });
-  }, []);
-
+const PieChart = ({ data }: { data: object[] }) => {
   if (data.length === 0) {
     return <Loader />;
   }
