@@ -1,14 +1,10 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import csv from 'csvtojson';
 import { Box } from '@material-ui/core';
 
 import {
-  CSSEGISandDataUrl,
-  filterCSSEGISandData,
   TCSSEGISandData,
-  TPreparedData,
-  prepareCSSEGISandData
+  TPreparedData
 } from '../helpers';
 import { baseCSSEGISandDataTypes } from '../config';
 import LineChart from '../components/LineChart';
