@@ -111,10 +111,20 @@ router.post('/russia-areas', async (req, res) => {
   try {
     const result = await axios.get(apiUrl);
     const data = result.data.match(/\:spread\-data\=\'(.*?)\'/is);
+    const jsonData = JSON.parse(data[1])
+      .filter((item) => {
+        return item.sick > minCount;
+      })
+      .map((item) => {
+        return {
+          ...item,
+          sick: +item.sick
+        };
+      });
 
       // file_put_contents($file, $mapData);
 
-    return res.json({ data: data[1] });
+    return res.json({ data: jsonData });
   } catch (e) {
     return res
       .status(500)

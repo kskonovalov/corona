@@ -25,16 +25,7 @@ const PieChart = () => {
       const { data: apiData } = res.data;
       if(apiData.length > 0) {
         setData(
-            JSON.parse(apiData)
-                .filter((item: any) => {
-                  return item.sick > 1000;
-                })
-                .map((item: any) => {
-                  return {
-                    ...item,
-                    sick: +item.sick
-                  };
-                })
+            apiData
         );
       }
     });
