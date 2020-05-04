@@ -34,22 +34,32 @@ const CovidRussianAreas = () => {
   const classes = useStyles();
 
   const [data, setData] = useState<object[]>([]);
+  const [areas, setAreas] = useState<object[]>([]);
   const [minCount, setMinCount] = useState<number>(1000);
 
-  const apiUrl = 'http://localhost:5000/api/russia-areas';
   useEffect(() => {
     axios
-      .post(apiUrl, {
+      .post('http://localhost:5000/api/russian-areas-data', {
         minCount
       })
       .then(res => {
         const { data: apiData } = res.data;
-        console.log(apiData);
         if (apiData.length > 0) {
           setData(apiData);
         }
       });
   }, [minCount]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/russian-areas')
+      .then(res => {
+        const { data: apiData } = res.data;
+        if (apiData.length > 0) {
+            setAreas(apiData);
+        }
+      });
+  }, []);
 
   return (
     <>

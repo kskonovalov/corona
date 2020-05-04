@@ -7,7 +7,8 @@ const csv = require('csvtojson');
 const {
   CSSEGISandDataUrl,
   filterCSSEGISandData,
-  prepareCSSEGISandData
+  prepareCSSEGISandData,
+  getApiAreas
 } = require('../helpers');
 
 router.get('/', async (req, res) => {
@@ -89,8 +90,10 @@ router.post('/graphdata', async (req, res) => {
 });
 
 
+
+
 // /api/russia-areas
-router.post('/russia-areas', async (req, res) => {
+router.post('/russian-areas-data', async (req, res) => {
   const { minCount } = req.body;
 
   // const TWO_HOURS_IN_SECONDS = 60 * 60 * 2;
@@ -106,23 +109,38 @@ router.post('/russia-areas', async (req, res) => {
 //     }
 //   }
 
-  const apiUrl = 'https://xn--80aesfpebagmfblc0a.xn--p1ai/information/';
 
   try {
-    const result = await axios.get(apiUrl);
-    const data = result.data.match(/\:spread\-data\=\'(.*?)\'/is);
-    const jsonData = JSON.parse(data[1])
+    const result = await axios.get(config.get('russianAreasApiUrl'));
+
+    const jsonData = getApiAreas(result)
       .filter((item) => {
         return item.sick > minCount;
-      })
-      .map((item) => {
-        return {
-          ...item,
-          sick: +item.sick
-        };
       });
 
       // file_put_contents($file, $mapData);
+
+    return res.json({ data: jsonData });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ error: 'Something get wrong! Please try again' });
+  }
+});
+
+
+// /api/russian-areas
+router.get('/russian-areas', async (req, res) => {
+  try {
+    const result = await axios.get(config.get('russianAreasApiUrl'));
+
+    const jsonData = getApiAreas(result)
+      .map((item) => {
+        return {
+          title: item.title,
+          code: item.code
+        };
+      });
 
     return res.json({ data: jsonData });
   } catch (e) {

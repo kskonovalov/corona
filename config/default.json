@@ -1,5 +1,6 @@
 {
   "port": 5000,
   "baseUrl": "http://localhost:5000",
-  "baseCSSEGISandDataUrl": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_{type}_global.csv"
+  "baseCSSEGISandDataUrl": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_{type}_global.csv",
+  "russianAreasApiUrl": "https://xn--80aesfpebagmfblc0a.xn--p1ai/information/"
 }

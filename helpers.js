@@ -87,3 +87,19 @@ const formatDate = (date) => {
   const options = { weekday: 'short', month: 'long', day: 'numeric' };
   return dayDate.toLocaleDateString('en-US', options);
 };
+
+/**
+ *
+ * @param html
+ * @returns {any}
+ */
+const getApiAreas = (html) => {
+  const data = html.data.match(/\:spread\-data\=\'(.*?)\'/is);
+  return JSON.parse(data[1]).map((item) => {
+    return {
+      ...item,
+      sick: +item.sick
+    };
+  });
+}
+module.exports.getApiAreas = getApiAreas;
