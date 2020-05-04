@@ -22,9 +22,8 @@ const PieChart = ({ data }: { data: object[] }) => {
           nameKey="title"
           dataKey="sick"
           data={data}
-          cx={240}
           cy={250}
-          outerRadius={130}
+          outerRadius={150}
           fill="#8884d8"
           label={({ name, sick }) => {
             return `${name} (${sick})`;
