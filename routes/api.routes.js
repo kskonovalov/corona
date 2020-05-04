@@ -130,11 +130,15 @@ router.post('/russian-areas-data', async (req, res) => {
 
 
 // /api/russian-areas
-router.get('/russian-areas', async (req, res) => {
+router.post('/russian-areas', async (req, res) => {
+  const { minCount } = req.body;
   try {
     const result = await axios.get(config.get('russianAreasApiUrl'));
 
     const jsonData = getApiAreas(result)
+      .filter((item) => {
+        return item.sick > minCount;
+      })
       .map((item) => {
         return {
           title: item.title,

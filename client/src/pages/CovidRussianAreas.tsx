@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import axios from 'axios';
-import { FormControl, TextField, Typography } from '@material-ui/core';
+import { FormControl, TextField, Typography, FormLabel, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
 
@@ -29,8 +29,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
+type ObjectAlias = object;
+interface IAreaObject extends ObjectAlias {
+    title: string;
+    code: string;
+}
 
-const CovidRussianAreas = () => {
+const CovidRussianAreas: React.FC = () => {
   const classes = useStyles();
 
   const [data, setData] = useState<object[]>([]);
@@ -51,8 +56,9 @@ const CovidRussianAreas = () => {
   }, [minCount]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/russian-areas')
+    axios.post('http://localhost:5000/api/russian-areas', {
+            minCount
+        })
       .then(res => {
         const { data: apiData } = res.data;
         if (apiData.length > 0) {
@@ -84,6 +90,18 @@ const CovidRussianAreas = () => {
           />
         </FormControl>
       </Typography>
+
+        <FormControl component="fieldset">
+            <FormLabel component="legend">Russian areas</FormLabel>
+            <FormGroup>
+                {areas.map((item: any) => {
+                    return <FormControlLabel key={item.code} id={item.code}
+                        control={<Checkbox checked={false} onChange={() => {}} name={item.code} />}
+                        label={item.title}
+                    />;
+                })}
+            </FormGroup>
+        </FormControl>
       <PieChart data={data} />
     </>
   );
