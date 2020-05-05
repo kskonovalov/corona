@@ -40,7 +40,7 @@ const CovidRussianAreas: React.FC = () => {
 
   const [data, setData] = useState<object[]>([]);
   const [areas, setAreas] = useState<object[]>([]);
-  const [minCount, setMinCount] = useState<number>(1000);
+  const [minCount, setMinCount] = useState<number>(1500);
 
   useEffect(() => {
     axios
@@ -66,6 +66,8 @@ const CovidRussianAreas: React.FC = () => {
         }
       });
   }, []);
+
+  console.log(areas);
 
   return (
     <>
@@ -93,7 +95,7 @@ const CovidRussianAreas: React.FC = () => {
 
         <FormControl component="fieldset">
             <FormLabel component="legend">Russian areas</FormLabel>
-            <FormGroup>
+            <FormGroup row={true}>
                 {areas.map((item: any) => {
                     return <FormControlLabel key={item.code} id={item.code}
                         control={<Checkbox checked={false} onChange={() => {}} name={item.code} />}
