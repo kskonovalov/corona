@@ -1,6 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import axios from 'axios';
-import { FormControl, TextField, Typography, FormLabel, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
+import {
+  FormControl,
+  TextField,
+  Typography,
+  FormLabel,
+  FormGroup,
+  FormControlLabel,
+  Checkbox
+} from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
 
@@ -30,23 +38,23 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface IAreaObject  {
-    title: string;
-    code: string;
+interface IAreaObject {
+  title: string;
+  code: string;
 }
 
-interface IData  {
-    code: string;
-    coord_x: string;
-    coord_y: string;
-    died: number;
-    died_incr: number;
-    healed: number;
-    healed_incr: number;
-    is_city: boolean;
-    sick: number;
-    sick_incr: number;
-    title: string;
+interface IData {
+  code: string;
+  coord_x: string;
+  coord_y: string;
+  died: number;
+  died_incr: number;
+  healed: number;
+  healed_incr: number;
+  is_city: boolean;
+  sick: number;
+  sick_incr: number;
+  title: string;
 }
 
 const CovidRussianAreas: React.FC = () => {
@@ -54,6 +62,7 @@ const CovidRussianAreas: React.FC = () => {
 
   const [data, setData] = useState<IData[]>([]);
   const [areas, setAreas] = useState<IAreaObject[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [minCount, setMinCount] = useState<number>(1500);
 
   useEffect(() => {
@@ -70,16 +79,25 @@ const CovidRussianAreas: React.FC = () => {
   }, [minCount]);
 
   useEffect(() => {
-    axios.post('http://localhost:5000/api/russian-areas', {
-            minCount
-        })
+    axios
+      .post('http://localhost:5000/api/russian-areas', {
+        minCount
+      })
       .then(res => {
         const { data: apiData } = res.data;
         if (apiData.length > 0) {
-            setAreas(apiData);
+          setAreas(apiData);
         }
       });
   }, []);
+
+  const checkHandler = (item: IAreaObject) => {
+    if (selected.includes(item.code)) {
+      setSelected(selected.filter(itm => itm !== item.code));
+    } else {
+      setSelected([...selected, item.code]);
+    }
+  };
 
   return (
     <>
@@ -105,17 +123,29 @@ const CovidRussianAreas: React.FC = () => {
         </FormControl>
       </Typography>
 
-        <FormControl component="fieldset">
-            <FormLabel component="legend">Russian areas</FormLabel>
-            <FormGroup row={true}>
-                {areas.map(item => {
-                    return (<FormControlLabel key={item.code} id={item.code}
-                        control={<Checkbox checked={false} onChange={() => {}} name={item.code} />}
-                        label={item.title}
-                    />);
-                })}
-            </FormGroup>
-        </FormControl>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Russian areas</FormLabel>
+        <FormGroup row={true}>
+          {areas.map(item => {
+            return (
+              <FormControlLabel
+                key={item.code}
+                id={item.code}
+                control={
+                  <Checkbox
+                    checked={selected.includes(item.code)}
+                    onChange={e => {
+                      checkHandler(item);
+                    }}
+                    name={item.code}
+                  />
+                }
+                label={item.title}
+              />
+            );
+          })}
+        </FormGroup>
+      </FormControl>
       <PieChart data={data} />
     </>
   );
