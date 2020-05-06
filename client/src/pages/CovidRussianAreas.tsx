@@ -29,17 +29,31 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-type ObjectAlias = object;
-interface IAreaObject extends ObjectAlias {
+
+interface IAreaObject  {
     title: string;
     code: string;
+}
+
+interface IData  {
+    code: string;
+    coord_x: string;
+    coord_y: string;
+    died: number;
+    died_incr: number;
+    healed: number;
+    healed_incr: number;
+    is_city: boolean;
+    sick: number;
+    sick_incr: number;
+    title: string;
 }
 
 const CovidRussianAreas: React.FC = () => {
   const classes = useStyles();
 
-  const [data, setData] = useState<object[]>([]);
-  const [areas, setAreas] = useState<object[]>([]);
+  const [data, setData] = useState<IData[]>([]);
+  const [areas, setAreas] = useState<IAreaObject[]>([]);
   const [minCount, setMinCount] = useState<number>(1500);
 
   useEffect(() => {
@@ -66,8 +80,6 @@ const CovidRussianAreas: React.FC = () => {
         }
       });
   }, []);
-
-  console.log(areas);
 
   return (
     <>
@@ -96,11 +108,11 @@ const CovidRussianAreas: React.FC = () => {
         <FormControl component="fieldset">
             <FormLabel component="legend">Russian areas</FormLabel>
             <FormGroup row={true}>
-                {areas.map((item: any) => {
-                    return <FormControlLabel key={item.code} id={item.code}
+                {areas.map(item => {
+                    return (<FormControlLabel key={item.code} id={item.code}
                         control={<Checkbox checked={false} onChange={() => {}} name={item.code} />}
                         label={item.title}
-                    />;
+                    />);
                 })}
             </FormGroup>
         </FormControl>
