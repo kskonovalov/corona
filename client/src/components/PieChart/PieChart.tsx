@@ -10,7 +10,13 @@ import {
 import Loader from '../Loader';
 import { getRandomColor } from '../../helpers';
 
-const PieChart = ({ data }: { data: object[] }) => {
+const PieChart = ({ data, selected }: { data: object[], selected: string[] }) => {
+  const [filtered, setFiltered] = useState(data);
+  useEffect(() => {
+    setFiltered(data.filter((item: any) => {
+      return selected.includes(item.code);
+    }))
+  }, [data, selected]);
   if (data.length === 0) {
     return <Loader />;
   }
@@ -21,7 +27,7 @@ const PieChart = ({ data }: { data: object[] }) => {
         <Pie
           nameKey="title"
           dataKey="sick"
-          data={data}
+          data={filtered}
           cy={250}
           outerRadius={150}
           fill="#8884d8"
@@ -29,7 +35,7 @@ const PieChart = ({ data }: { data: object[] }) => {
             return `${name} (${sick})`;
           }}
         >
-          {data.map((item: any, i: number) => (
+          {filtered.map((item: any, i: number) => (
             <Cell key={`cell-${i}`} fill={getRandomColor()} />
           ))}
         </Pie>

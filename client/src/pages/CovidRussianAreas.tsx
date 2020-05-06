@@ -146,7 +146,7 @@ const CovidRussianAreas: React.FC = () => {
           })}
         </FormGroup>
       </FormControl>
-      <PieChart data={data} />
+      <PieChart data={data} selected={selected} />
     </>
   );
 };
