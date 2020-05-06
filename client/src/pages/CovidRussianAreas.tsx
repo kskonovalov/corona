@@ -89,7 +89,7 @@ const CovidRussianAreas: React.FC = () => {
           setAreas(apiData);
         }
       });
-  }, []);
+  }, [minCount]);
 
   const checkHandler = (item: IAreaObject) => {
     if (selected.includes(item.code)) {
