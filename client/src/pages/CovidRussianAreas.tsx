@@ -65,19 +65,7 @@ const CovidRussianAreas: React.FC = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [minCount, setMinCount] = useState<number>(1500);
 
-  useEffect(() => {
-    axios
-      .post('http://localhost:5000/api/russian-areas-data', {
-        minCount
-      })
-      .then(res => {
-        const { data: apiData } = res.data;
-        if (apiData.length > 0) {
-          setData(apiData);
-        }
-      });
-  }, [minCount]);
-
+  // get areas with infected count and other data from api
   useEffect(() => {
     axios
       .post('http://localhost:5000/api/russian-areas', {
@@ -86,7 +74,15 @@ const CovidRussianAreas: React.FC = () => {
       .then(res => {
         const { data: apiData } = res.data;
         if (apiData.length > 0) {
-          setAreas(apiData);
+          setData(apiData);
+          setAreas(
+            apiData.map((item: IData) => {
+              return {
+                title: item.title,
+                code: item.code
+              };
+            })
+          );
         }
       });
   }, [minCount]);

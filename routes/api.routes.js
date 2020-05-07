@@ -93,7 +93,7 @@ router.post('/graphdata', async (req, res) => {
 
 
 // /api/russia-areas
-router.post('/russian-areas-data', async (req, res) => {
+router.post('/russian-areas', async (req, res) => {
   const { minCount } = req.body;
 
   // const TWO_HOURS_IN_SECONDS = 60 * 60 * 2;
@@ -119,32 +119,6 @@ router.post('/russian-areas-data', async (req, res) => {
       });
 
       // file_put_contents($file, $mapData);
-
-    return res.json({ data: jsonData });
-  } catch (e) {
-    return res
-      .status(500)
-      .json({ error: 'Something get wrong! Please try again' });
-  }
-});
-
-
-// /api/russian-areas
-router.post('/russian-areas', async (req, res) => {
-  const { minCount } = req.body;
-  try {
-    const result = await axios.get(config.get('russianAreasApiUrl'));
-
-    const jsonData = getApiAreas(result)
-      .filter((item) => {
-        return item.sick > minCount;
-      })
-      .map((item) => {
-        return {
-          title: item.title,
-          code: item.code
-        };
-      });
 
     return res.json({ data: jsonData });
   } catch (e) {
