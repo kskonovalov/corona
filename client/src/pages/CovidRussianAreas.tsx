@@ -62,10 +62,12 @@ const CovidRussianAreas: React.FC = () => {
 
   const [data, setData] = useState<IData[]>([]);
   const [areas, setAreas] = useState<IAreaObject[]>([]);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [minCount, setMinCount] = useState<number>(1500);
+  const savedSelected: string = localStorage.getItem('selected') || '[]';
+  const [selected, setSelected] = useState<string[]>(JSON.parse(savedSelected));
+  const savedMinCount: string = localStorage.getItem('minCount') || "1500";
+  const [minCount, setMinCount] = useState<number>(parseInt(savedMinCount));
 
-  // get areas with infected count and other data from api
+  // get areas data from api
   useEffect(() => {
     axios
       .post('http://localhost:5000/api/russian-areas', {
@@ -85,6 +87,14 @@ const CovidRussianAreas: React.FC = () => {
           );
         }
       });
+  }, [minCount]);
+
+  useEffect(() => {
+    localStorage.setItem('selected', JSON.stringify(selected));
+  }, [selected]);
+
+  useEffect(() => {
+    localStorage.setItem('minCount', minCount.toString());
   }, [minCount]);
 
   const checkHandler = (item: IAreaObject) => {
