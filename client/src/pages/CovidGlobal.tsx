@@ -19,7 +19,6 @@ const CovidGLobal = () => {
   const [country, setCountry] = useState<string>('Russia');
   const [provinces, setProvinces] = useState<string[]>([]);
   const [province, setProvince] = useState<string>('');
-  const [apiData, setApiData] = useState<TCSSEGISandData[]>([]);
   const [preparedData, setPreparedData] = useState<TPreparedData[]>([]);
   const [displayForDays, setDisplayForDays] = useState<number>(30);
 
