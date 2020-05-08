@@ -20,7 +20,8 @@ const CovidGLobal = () => {
   const [provinces, setProvinces] = useState<string[]>([]);
   const [province, setProvince] = useState<string>('');
   const [preparedData, setPreparedData] = useState<TPreparedData[]>([]);
-  const [displayForDays, setDisplayForDays] = useState<number>(30);
+  const savedDisplayForDays: string = localStorage.getItem('displayForDays') || "30";
+  const [displayForDays, setDisplayForDays] = useState<number>(parseInt(savedDisplayForDays));
 
   // get countries from api
   useEffect(() => {
@@ -66,6 +67,11 @@ const CovidGLobal = () => {
       }
     });
   }, [type, country, province, displayForDays]);
+
+
+  useEffect(() => {
+    localStorage.setItem('displayForDays', displayForDays.toString());
+  }, [displayForDays]);
 
   if (preparedData.length === 0) {
     return <Loader />;
