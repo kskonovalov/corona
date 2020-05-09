@@ -90,6 +90,31 @@ router.post('/graphdata', async (req, res) => {
 });
 
 
+// /api/dynamic
+// Dynamic of count
+router.post('/dynamic', async (req, res) => {
+  const { type, country, province, displayForDays } = req.body;
+  const apiUrl = CSSEGISandDataUrl(type);
+  try {
+    const { data } = await axios.get(apiUrl);
+    const jsonData = await csv({
+      output: 'json'
+    }).fromString(data);
+
+    const filteredByCountry = filterCSSEGISandData(jsonData, country, province);
+    const dataArray = prepareCSSEGISandData(filteredByCountry);
+
+    const apiData = dataArray.slice(Math.max(dataArray.length - displayForDays, 0));
+
+    return res.json({ data: apiData });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ error: 'Something get wrong! Please try again' });
+  }
+});
+
+
 
 
 // /api/russia-areas
