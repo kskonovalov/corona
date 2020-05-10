@@ -48,9 +48,6 @@ const Header = () => {
             <Button component={NavLink} to="/" exact className={classes.button}>
               World
             </Button>
-            <Button component={NavLink} to="/dynamic" exact className={classes.button}>
-              Dynamic
-            </Button>
             <Button component={NavLink} to="/russia" className={classes.button}>
               Russia
             </Button>

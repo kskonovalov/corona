@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 
 import Header from './components/Header';
 import CovidGLobal from './pages/CovidGlobal';
-import CovidGlobalDynamic from './pages/CovidGlobalDynamic';
 import CovidRussianAreas from './pages/CovidRussianAreas';
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
       <BrowserRouter>
         <Header />
         <Route path="/" exact component={CovidGLobal} />
-        <Route path="/dynamic" exact component={CovidGlobalDynamic} />
         <Route path="/russia" component={CovidRussianAreas} />
       </BrowserRouter>
     </Container>
