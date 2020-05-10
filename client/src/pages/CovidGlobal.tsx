@@ -67,7 +67,7 @@ const CovidGLobal = () => {
         setPreparedData([]);
       }
     });
-  }, [type, country, province, displayForDays]);
+  }, [type, country, province, displayForDays, dynamic]);
 
 
   useEffect(() => {
