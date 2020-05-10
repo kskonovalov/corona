@@ -22,6 +22,7 @@ const CovidGLobal = () => {
   const [preparedData, setPreparedData] = useState<TPreparedData[]>([]);
   const savedDisplayForDays: string = localStorage.getItem('displayForDays') || "30";
   const [displayForDays, setDisplayForDays] = useState<number>(parseInt(savedDisplayForDays));
+  const [dynamic, setDynamic] = useState<boolean>(true);
 
   // get countries from api
   useEffect(() => {
@@ -52,7 +53,7 @@ const CovidGLobal = () => {
 
   // prepare data to the format for graphics
   useEffect(() => {
-    const apiUrl = 'http://localhost:5000/api/graphdata';
+    const apiUrl = dynamic ? 'http://localhost:5000/api/dynamic' : 'http://localhost:5000/api/graphdata';
     axios.post(apiUrl, {
       type,
       country,
@@ -90,6 +91,8 @@ const CovidGLobal = () => {
         countries={countries}
         displayForDays={displayForDays}
         setDisplayForDays={setDisplayForDays}
+        dynamic={dynamic}
+        setDynamic={setDynamic}
       />
       {preparedData.length > 0 ? (
         <h2>

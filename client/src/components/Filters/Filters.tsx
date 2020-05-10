@@ -1,6 +1,8 @@
 import React, { ChangeEvent } from 'react';
 import {
+  Checkbox,
   FormControl,
+  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -51,6 +53,8 @@ type TFilters = {
   countries: string[];
   displayForDays: number;
   setDisplayForDays: (value: number) => void;
+  dynamic: boolean;
+  setDynamic: (value: boolean) => void;
 };
 
 const Filters: React.FC<TFilters> = ({
@@ -63,7 +67,9 @@ const Filters: React.FC<TFilters> = ({
   setCountry,
   countries,
   displayForDays,
-  setDisplayForDays
+  setDisplayForDays,
+  dynamic,
+  setDynamic
 }) => {
   const classes = useStyles();
   return (
@@ -156,7 +162,20 @@ const Filters: React.FC<TFilters> = ({
           className={classes.inputWrap}
         />
       </FormControl>
-      days
+      days{` `}
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={dynamic}
+            onChange={e => {
+              setDynamic(!dynamic);
+            }}
+            name="dynamic"
+          />
+        }
+        label=""
+      />
+      dynamics
     </Typography>
   );
 };
