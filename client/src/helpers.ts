@@ -3,13 +3,14 @@ import { baseCSSEGISandDataUrl, baseCSSEGISandDataTypes } from './config';
 /**
  * Function generates random color
  */
-const getRandomColor = () => {
+const getRandomColor = (): string => {
   const letters = '0123456789ABCDEF';
-  let color = '#';
+  const color: string[] = [];
+  color.push('#');
   for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+    color.push(letters[Math.floor(Math.random() * 16)]);
   }
-  return color;
+  return color.join("");
 };
 
 export { getRandomColor };
