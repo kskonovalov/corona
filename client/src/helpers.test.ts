@@ -9,12 +9,3 @@ describe('getRandomColor', () => {
     expect(typeof color).toBe('string');
   });
 });
-
-import { formatDate } from './helpers';
-
-describe('formatDate', () => {
-  it('should format date?', () => {
-      const result = formatDate("25.11.1987");
-      console.log(result);
-  });
-});
