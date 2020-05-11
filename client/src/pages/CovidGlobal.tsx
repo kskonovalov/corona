@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box } from '@material-ui/core';
 
-import { TCSSEGISandData, TPreparedData } from '../helpers';
+import { TPreparedData } from '../helpers';
 import { baseCSSEGISandDataTypes } from '../config';
 import LineChart from '../components/LineChart';
 import Loader from '../components/Loader';
