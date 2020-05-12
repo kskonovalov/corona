@@ -10,12 +10,19 @@ import {
 import Loader from '../Loader';
 import { getRandomColor } from '../../helpers';
 
-const PieChart = ({ data, selected }: { data: object[], selected: string[] }) => {
+interface IPieChart {
+  data: object[];
+  selected: string[];
+}
+
+const PieChart: React.FC<IPieChart> = ({ data, selected }) => {
   const [filtered, setFiltered] = useState(data);
   useEffect(() => {
-    setFiltered(data.filter((item: any) => {
-      return selected.includes(item.code);
-    }))
+    setFiltered(
+      data.filter((item: any) => {
+        return selected.includes(item.code);
+      })
+    );
   }, [data, selected]);
   if (data.length === 0) {
     return <Loader />;

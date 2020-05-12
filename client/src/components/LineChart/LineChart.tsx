@@ -10,7 +10,7 @@ import {
 
 import Loader from '../Loader';
 
-const LineChart: React.FC<any> = ({ data }) => {
+const LineChart: React.FC<{ data: object[] }> = ({ data }) => {
   const [maxCount, setMaxCount] = useState<number>(0);
 
   useEffect(() => {

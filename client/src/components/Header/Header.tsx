@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Header = () => {
+const Header: React.FC = () => {
   const classes = useStyles();
   return (
     <>
