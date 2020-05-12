@@ -10,10 +10,6 @@ import {
 
 import Loader from '../Loader';
 
-interface IData {
-  data: any;
-}
-
 const LineChart: React.FC<any> = ({ data }) => {
   const [maxCount, setMaxCount] = useState<number>(0);
 
