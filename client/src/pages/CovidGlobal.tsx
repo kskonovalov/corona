@@ -8,7 +8,7 @@ import LineChart from '../components/LineChart';
 import Loader from '../components/Loader';
 import Filters from '../components/Filters';
 
-const CovidGLobal = () => {
+const CovidGLobal: React.FC = () => {
   const [type, setType] = useState<baseCSSEGISandDataTypes | string>(
     'confirmed'
   );
