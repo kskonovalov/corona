@@ -11,23 +11,7 @@ import {
 } from '@material-ui/core';
 
 import useStyles from './styles';
-import { baseCSSEGISandDataTypes } from '../../config';
-
-
-type TFilters = {
-  type: baseCSSEGISandDataTypes | string;
-  setType: (value: baseCSSEGISandDataTypes | string) => void;
-  provinces: string[];
-  province: string;
-  setProvince: (value: string) => void;
-  country: string;
-  setCountry: (value: string) => void;
-  countries: string[];
-  displayForDays: number;
-  setDisplayForDays: (value: number) => void;
-  dynamic: boolean;
-  setDynamic: (value: boolean) => void;
-};
+import TFilters from './types';
 
 const Filters: React.FC<TFilters> = ({
   type,
