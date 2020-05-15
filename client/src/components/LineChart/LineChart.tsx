@@ -54,9 +54,6 @@ const LineChart: React.FC<{ data: object[] }> = ({ data }) => {
           dataKey="count"
           stroke="#8884d8"
           activeDot={{ r: 8 }}
-          // label={({x, y}) => {
-          //     return `date: ${x}, infected: ${y}`;
-          // }}
         />
       </LineChartGraph>
     </ResponsiveContainer>
