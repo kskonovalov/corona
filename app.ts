@@ -1,13 +1,16 @@
-const express = require('express');
-const config = require('config');
-const path = require('path');
-const cors = require('cors')
+export {};
+
+import express from "express";
+import config from "config";
+import path from "path";
+import cors from "cors";
 
 const app = express();
 
 app.use(cors());
 
-app.use(express.json({ extended: true }));
+
+// app.use(express.json({ extended: true }));
 
 app.use('/api', require('./routes/api.routes'));
 
@@ -15,7 +18,7 @@ app.use('/api', require('./routes/api.routes'));
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')));
 
-    app.get('*', (req, res) => {
+    app.get('*', (req: express.Request, res: express.Response) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     })
 }
