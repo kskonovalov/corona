@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
 router.post('/countries', async (req, res) => {
   const { type } = req.body;
   const apiUrl = CSSEGISandDataUrl(type);
+  res.json({ data: apiCountries });
   const apiCountries = [];
   try {
     const { data } = await axios.get(apiUrl);

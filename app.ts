@@ -13,7 +13,7 @@ const app = express();
 
 app.use(cors());
 
-// app.use(express.json({ extended: true }));cd
+app.use(express.json({ extended: true }));
 
 app.use('/api', require('./routes/api.routes'));
 
