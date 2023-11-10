@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/kskonovalov/corona#readme",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
