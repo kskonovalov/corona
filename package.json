@@ -28,7 +28,7 @@
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
-    "express": "^4.17.1"
+    "express": "^5.0.0"
   },
   "devDependencies": {
     "@types/config": "0.0.36",
